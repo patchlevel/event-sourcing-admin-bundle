@@ -21,7 +21,7 @@ final class DefaultController
     #[Route('/')]
     public function indexAction(): Response
     {
-        return new RedirectResponse($this->router->generate('patchlevel_event_sourcing_admin_store_show'));
+        return new RedirectResponse($this->router->generate('patchlevel_eventsourcingadmin_store_show'));
     }
 
     #[Route('/style.css')]

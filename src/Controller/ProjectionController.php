@@ -50,7 +50,7 @@ final class ProjectionController
         $this->projectionist->boot($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_eventsourcing_admin_projection_show'),
+            $this->router->generate('patchlevel_eventsourcingadmin_projection_show'),
         );
     }
 }

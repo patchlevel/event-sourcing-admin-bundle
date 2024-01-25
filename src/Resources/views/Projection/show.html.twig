@@ -1,4 +1,4 @@
-{% extends '@PatchlevelEventSourcing/layout.html.twig' %}
+{% extends '@PatchlevelEventSourcingAdmin/layout.html.twig' %}
 
 {% block content %}
     <h1>Projection</h1>
@@ -22,7 +22,7 @@
                     <td>{{ projection.status.value }}</td>
                     <td>{{ projection.errorMessage }}</td>
                     <td>
-                        <a href="{{ path('patchlevel_eventsourcing_projection_rebuild', {'id': projection.id.toString}) }}" class="btn btn-danger">Rebuild</a>
+                        <a href="{{ path('patchlevel_eventsourcingadmin_projection_rebuild', {'id': projection.id.toString}) }}" class="btn btn-danger">Rebuild</a>
                     </td>
                 </tr>
             {% endfor %}
