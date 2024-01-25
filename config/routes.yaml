@@ -1,0 +1,12 @@
+patchlevel_event_sourcing_admin_default_index:
+  path: /
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\DefaultController::indexAction
+
+patchlevel_event_sourcing_admin_store_show:
+  path: /store
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\StoreController::showAction
+
+patchlevel_event_sourcing_admin_projection_show:
+  path: /store
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::showAction
+

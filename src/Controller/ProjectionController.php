@@ -10,11 +10,9 @@ use Patchlevel\EventSourcing\Projection\Projectionist\Projectionist;
 use Patchlevel\EventSourcing\Store\Store;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-#[Route('/projection')]
 final class ProjectionController
 {
     public function __construct(
@@ -25,21 +23,19 @@ final class ProjectionController
     ) {
     }
 
-    #[Route('/')]
     public function showAction(): Response
     {
         $projections = $this->projectionist->projections();
         $messageCount = $this->store->count();
 
         return new Response(
-            $this->twig->render('@PatchlevelEventSourcingAdmin/Projection/show.html.twig', [
+            $this->twig->render('@PatchlevelEventSourcingAdmin/projection/show.html.twig', [
                 'projections' => $projections,
                 'messageCount' => $messageCount,
             ]),
         );
     }
 
-    #[Route('/{id}/rebuild')]
     public function rebuildAction(string $id): Response
     {
         $criteria = new ProjectionCriteria([
@@ -50,7 +46,7 @@ final class ProjectionController
         $this->projectionist->boot($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_eventsourcingadmin_projection_show'),
+            $this->router->generate('patchlevel_eventsourcing_admin_projection_show'),
         );
     }
 }

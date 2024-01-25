@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "081a2581c694d40bd782edd6a8e2b8dd",
+    "content-hash": "b726633e603711a97d589b2f34655fb4",
     "packages": [
         {
             "name": "brick/math",
@@ -1179,6 +1179,75 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "symfony/asset",
+            "version": "v7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/asset.git",
+                "reference": "82cd3961bc7fc1b3c3f85e8f2b9a287a1dfd6f2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/asset/zipball/82cd3961bc7fc1b3c3f85e8f2b9a287a1dfd6f2f",
+                "reference": "82cd3961bc7fc1b3c3f85e8f2b9a287a1dfd6f2f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "conflict": {
+                "symfony/http-foundation": "<6.4"
+            },
+            "require-dev": {
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/http-foundation": "^6.4|^7.0",
+                "symfony/http-kernel": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Asset\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Manages URL generation and versioning of web assets such as CSS stylesheets, JavaScript files and image files",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/asset/tree/v7.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-10-31T17:59:56+00:00"
         },
         {
             "name": "symfony/config",
@@ -3671,108 +3740,6 @@
                 }
             ],
             "time": "2022-12-30T00:23:10+00:00"
-        },
-        {
-            "name": "doctrine/migrations",
-            "version": "3.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/migrations.git",
-                "reference": "47af29eef49f29ebee545947e8b2a4b3be318c8a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/47af29eef49f29ebee545947e8b2a4b3be318c8a",
-                "reference": "47af29eef49f29ebee545947e8b2a4b3be318c8a",
-                "shasum": ""
-            },
-            "require": {
-                "composer-runtime-api": "^2",
-                "doctrine/dbal": "^3.5.1 || ^4",
-                "doctrine/deprecations": "^0.5.3 || ^1",
-                "doctrine/event-manager": "^1.2 || ^2.0",
-                "php": "^8.1",
-                "psr/log": "^1.1.3 || ^2 || ^3",
-                "symfony/console": "^5.4 || ^6.0 || ^7.0",
-                "symfony/stopwatch": "^5.4 || ^6.0 || ^7.0",
-                "symfony/var-exporter": "^6.2 || ^7.0"
-            },
-            "conflict": {
-                "doctrine/orm": "<2.12 || >=4"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^12",
-                "doctrine/orm": "^2.13 || ^3",
-                "doctrine/persistence": "^2 || ^3",
-                "doctrine/sql-formatter": "^1.0",
-                "ext-pdo_sqlite": "*",
-                "phpstan/phpstan": "^1.10",
-                "phpstan/phpstan-deprecation-rules": "^1.1",
-                "phpstan/phpstan-phpunit": "^1.3",
-                "phpstan/phpstan-strict-rules": "^1.4",
-                "phpstan/phpstan-symfony": "^1.3",
-                "phpunit/phpunit": "^10.3",
-                "symfony/cache": "^5.4 || ^6.0 || ^7.0",
-                "symfony/process": "^5.4 || ^6.0 || ^7.0",
-                "symfony/yaml": "^5.4 || ^6.0 || ^7.0"
-            },
-            "suggest": {
-                "doctrine/sql-formatter": "Allows to generate formatted SQL with the diff command.",
-                "symfony/yaml": "Allows the use of yaml for migration configuration files."
-            },
-            "bin": [
-                "bin/doctrine-migrations"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Migrations\\": "lib/Doctrine/Migrations"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Michael Simonson",
-                    "email": "contact@mikesimonson.com"
-                }
-            ],
-            "description": "PHP Doctrine Migrations project offer additional functionality on top of the database abstraction layer (DBAL) for versioning your database schema and easily deploying changes to it. It is a very easy to use and a powerful tool.",
-            "homepage": "https://www.doctrine-project.org/projects/migrations.html",
-            "keywords": [
-                "database",
-                "dbal",
-                "migrations"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/migrations/issues",
-                "source": "https://github.com/doctrine/migrations/tree/3.7.2"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fmigrations",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-12-05T11:35:05+00:00"
         },
         {
             "name": "felixfbecker/advanced-json-rpc",
@@ -7911,88 +7878,6 @@
             "time": "2023-12-29T15:37:40+00:00"
         },
         {
-            "name": "symfony/polyfill-uuid",
-            "version": "v1.28.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-uuid.git",
-                "reference": "9c44518a5aff8da565c8a55dbe85d2769e6f630e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-uuid/zipball/9c44518a5aff8da565c8a55dbe85d2769e6f630e",
-                "reference": "9c44518a5aff8da565c8a55dbe85d2769e6f630e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "provide": {
-                "ext-uuid": "*"
-            },
-            "suggest": {
-                "ext-uuid": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.28-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Uuid\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Grégoire Pineau",
-                    "email": "lyrixx@lyrixx.info"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for uuid functions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "uuid"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-uuid/tree/v1.28.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-01-26T09:26:14+00:00"
-        },
-        {
             "name": "symfony/process",
             "version": "v7.0.2",
             "source": {
@@ -8133,142 +8018,6 @@
                 }
             ],
             "time": "2023-12-29T15:37:40+00:00"
-        },
-        {
-            "name": "symfony/stopwatch",
-            "version": "v7.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "7bbfa3dd564a0ce12eb4acaaa46823c740f9cb7a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/7bbfa3dd564a0ce12eb4acaaa46823c740f9cb7a",
-                "reference": "7bbfa3dd564a0ce12eb4acaaa46823c740f9cb7a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2",
-                "symfony/service-contracts": "^2.5|^3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Stopwatch\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides a way to profile code",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/stopwatch/tree/v7.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-07-05T13:06:06+00:00"
-        },
-        {
-            "name": "symfony/uid",
-            "version": "v7.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/uid.git",
-                "reference": "9472fe6a4a2adcc9150106ebb9fde328828d312f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/uid/zipball/9472fe6a4a2adcc9150106ebb9fde328828d312f",
-                "reference": "9472fe6a4a2adcc9150106ebb9fde328828d312f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2",
-                "symfony/polyfill-uuid": "^1.15"
-            },
-            "require-dev": {
-                "symfony/console": "^6.4|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Uid\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Grégoire Pineau",
-                    "email": "lyrixx@lyrixx.info"
-                },
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides an object-oriented API to generate and represent UIDs",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "UID",
-                "ulid",
-                "uuid"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/uid/tree/v7.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-10-31T08:22:02+00:00"
         },
         {
             "name": "thecodingmachine/safe",
@@ -8638,8 +8387,6 @@
     "platform": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
     },
-    "platform-dev": {
-        "ext-pdo_sqlite": "*"
-    },
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }

@@ -9,10 +9,8 @@ use Patchlevel\EventSourcing\Store\Criteria;
 use Patchlevel\EventSourcing\Store\Store;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
-#[Route('/store')]
 final class StoreController
 {
     public function __construct(
@@ -22,7 +20,6 @@ final class StoreController
     ) {
     }
 
-    #[Route('/')]
     public function showAction(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
@@ -40,7 +37,7 @@ final class StoreController
         $count = $this->store->count($criteria);
 
         return new Response(
-            $this->twig->render('@PatchlevelEventSourcingAdmin/Store/show.html.twig', [
+            $this->twig->render('@PatchlevelEventSourcingAdmin/store/show.html.twig', [
                 'messages' => $messages,
                 'count' => $count,
                 'aggregates' => $this->aggregateRootRegistry->aggregateNames(),

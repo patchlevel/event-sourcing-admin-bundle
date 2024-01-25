@@ -4,7 +4,7 @@
     <h1>Store</h1>
 
     <div class="filter">
-        <form action="{{ path('patchlevel_eventsourcingadmin_store_show') }}">
+        <form action="{{ path('patchlevel_event_sourcing_admin_store_show') }}">
             <select name="aggregate">
                 <option value="">All</option>
                 {% for aggregate in aggregates %}
@@ -15,7 +15,7 @@
             <input name="aggregateId" value="{{ app.request.get('aggregateId') }}">
 
             <button type="submit">Filter</button>
-            <a class="button" href="{{ path('patchlevel_eventsourcingadmin_store_show') }}">Clear</a>
+            <a class="button" href="{{ path('patchlevel_event_sourcing_admin_store_show') }}">Clear</a>
         </form>
     </div>
 
@@ -38,12 +38,12 @@
             <tr>
                 <td>{{ messages.index }}</td>
                 <td>
-                    <a href="{{ path('patchlevel_eventsourcingadmin_store_show', {aggregate: eventsourcing_aggregate_name(message)}) }}">
+                    <a href="{{ path('patchlevel_event_sourcing_admin_store_show', {aggregate: eventsourcing_aggregate_name(message)}) }}">
                         {{ eventsourcing_aggregate_name(message) }}
                     </a>
                 </td>
                 <td>
-                    <a href="{{ path('patchlevel_eventsourcingadmin_store_show', {aggregate: eventsourcing_aggregate_name(message), aggregateId: message.aggregateId}) }}">
+                    <a href="{{ path('patchlevel_event_sourcing_admin_store_show', {aggregate: eventsourcing_aggregate_name(message), aggregateId: message.aggregateId}) }}">
                         {{ message.aggregateId }}
                     </a>
                 </td>
