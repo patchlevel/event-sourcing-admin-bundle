@@ -12,11 +12,10 @@ use Patchlevel\EventSourcing\Store\Store;
 use Patchlevel\EventSourcingAdminBundle\Controller\DefaultController;
 use Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\StoreController;
-use Patchlevel\EventSourcingBundle\Twig\EventSourcingExtension;
+use Patchlevel\EventSourcingAdminBundle\Twig\EventSourcingAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -62,7 +61,7 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
             ])
             ->addTag('controller.service_arguments');
 
-        $container->register(EventSourcingExtension::class)
+        $container->register(EventSourcingAdminExtension::class)
             ->setArguments([
                 new Reference(AggregateRootRegistry::class),
                 new Reference(EventRegistry::class),

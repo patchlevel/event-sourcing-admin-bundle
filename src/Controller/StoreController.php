@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
@@ -14,11 +16,10 @@ use Twig\Environment;
 final class StoreController
 {
     public function __construct(
-        private readonly Environment           $twig,
-        private readonly Store                 $store,
+        private readonly Environment $twig,
+        private readonly Store $store,
         private readonly AggregateRootRegistry $aggregateRootRegistry,
-    )
-    {
+    ) {
     }
 
     #[Route('/')]
@@ -45,7 +46,7 @@ final class StoreController
                 'aggregates' => $this->aggregateRootRegistry->aggregateNames(),
                 'limit' => $limit,
                 'page' => $page,
-            ])
+            ]),
         );
     }
 

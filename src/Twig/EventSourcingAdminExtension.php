@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Patchlevel\EventSourcingAdminBundle\Twig;
 
 use Patchlevel\EventSourcing\EventBus\Message;
@@ -10,19 +12,18 @@ use Patchlevel\EventSourcing\Serializer\EventSerializer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+use function get_class;
+
 final class EventSourcingAdminExtension extends AbstractExtension
 {
     public function __construct(
         private readonly AggregateRootRegistry $aggregateRootRegistry,
-        private readonly EventRegistry         $eventRegistry,
-        private readonly EventSerializer       $eventSerializer,
-    )
-    {
+        private readonly EventRegistry $eventRegistry,
+        private readonly EventSerializer $eventSerializer,
+    ) {
     }
 
-    /**
-     * @return list<TwigFunction>
-     */
+    /** @return list<TwigFunction> */
     public function getFunctions(): array
     {
         return [
@@ -33,17 +34,13 @@ final class EventSourcingAdminExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return class-string
-     */
+    /** @return class-string */
     public function aggregateName(Message $message): string
     {
         return $this->aggregateRootRegistry->aggregateName($message->aggregateClass());
     }
 
-    /**
-     * @return class-string
-     */
+    /** @return class-string */
     public function eventClass(Message $message): string
     {
         return get_class($message->event());
@@ -52,7 +49,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
     public function eventName(Message $message): string
     {
         return $this->eventRegistry->eventName(
-            $this->eventClass($message)
+            $this->eventClass($message),
         );
     }
 
@@ -60,9 +57,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
     {
         return $this->eventSerializer->serialize(
             $message->event(),
-            [
-                JsonEncoder::OPTION_PRETTY_PRINT => true,
-            ]
+            [JsonEncoder::OPTION_PRETTY_PRINT => true],
         )->payload;
     }
 }

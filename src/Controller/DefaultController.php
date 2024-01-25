@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -11,10 +13,9 @@ use Twig\Environment;
 final class DefaultController
 {
     public function __construct(
-        private readonly Environment     $twig,
+        private readonly Environment $twig,
         private readonly RouterInterface $router,
-    )
-    {
+    ) {
     }
 
     #[Route('/')]
@@ -29,9 +30,7 @@ final class DefaultController
         return new Response(
             $this->twig->render('@PatchlevelEventSourcingAdmin/style.css.twig'),
             200,
-            [
-                'Content-Type' => 'text/css',
-            ]
+            ['Content-Type' => 'text/css'],
         );
     }
 }

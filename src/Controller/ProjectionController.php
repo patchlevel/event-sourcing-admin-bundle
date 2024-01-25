@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
 use Patchlevel\EventSourcing\Projection\Projection\ProjectionCriteria;
@@ -20,8 +22,7 @@ final class ProjectionController
         private readonly Projectionist $projectionist,
         private readonly Store $store,
         private readonly RouterInterface $router,
-    )
-    {
+    ) {
     }
 
     #[Route('/')]
@@ -34,7 +35,7 @@ final class ProjectionController
             $this->twig->render('@PatchlevelEventSourcingAdmin/Projection/show.html.twig', [
                 'projections' => $projections,
                 'messageCount' => $messageCount,
-            ])
+            ]),
         );
     }
 
@@ -49,7 +50,7 @@ final class ProjectionController
         $this->projectionist->boot($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_eventsourcing_admin_projection_show')
+            $this->router->generate('patchlevel_eventsourcing_admin_projection_show'),
         );
     }
 }
