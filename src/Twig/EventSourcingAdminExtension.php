@@ -31,7 +31,15 @@ final class EventSourcingAdminExtension extends AbstractExtension
             new TwigFunction('eventsourcing_event_class', $this->eventClass(...)),
             new TwigFunction('eventsourcing_event_name', $this->eventName(...)),
             new TwigFunction('eventsourcing_event_payload', $this->eventPayload(...)),
+            new TwigFunction('eventsourcing_short_id', $this->shortId(...)),
         ];
+    }
+
+    public function shortId(string $id): string
+    {
+        $parts = explode('-', $id);
+
+        return array_pop($parts);
     }
 
     /** @return class-string */

@@ -1,20 +1,19 @@
 .json_key, .json_key span {
-    color: #606;
+    color: #6d28d9;
 }
 
 .json_string, .json_string span {
-    color: #282;
+    color: #15803d;
 }
 
 .json_number {
-    color: #009;
+    color: #1d4ed8;
 }
 
 .json_bool {
-    color: #e00;
+    color: #b91c1c;
 }
 
 .json {
     white-space: pre;
-    font: 14px/1.5 Monaco, MonoSpace;
 }

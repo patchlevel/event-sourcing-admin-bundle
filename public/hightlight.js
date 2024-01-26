@@ -1,6 +1,3 @@
-/*
- * Simple json hightlight (without external libs)
- */
 function escapeHtml(text) {
     return text.replace(/[<>&]/g, function(char) {
         return {'<': '&lt;', '>': '&gt;', '&': '&amp;'}[char];

@@ -7,6 +7,9 @@ patchlevel_event_sourcing_admin_store_show:
   controller: Patchlevel\EventSourcingAdminBundle\Controller\StoreController::showAction
 
 patchlevel_event_sourcing_admin_projection_show:
-  path: /store
+  path: /projection
   controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::showAction
 
+patchlevel_eventsourcingadmin_projection_rebuild:
+  path: /projection/rebuild
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::rebuildAction

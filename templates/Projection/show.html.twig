@@ -20,7 +20,7 @@
                     <td>{{ projection.id.version }}</td>
                     <td>{{ projection.position }} / {{ messageCount }}</td>
                     <td>{{ projection.status.value }}</td>
-                    <td>{{ projection.errorMessage }}</td>
+                    <td>{{ projection.error.message|default }}</td>
                     <td>
                         <a href="{{ path('patchlevel_eventsourcingadmin_projection_rebuild', {'id': projection.id.toString}) }}" class="btn btn-danger">Rebuild</a>
                     </td>
