@@ -1,33 +1,135 @@
 {% extends '@PatchlevelEventSourcingAdmin/layout.html.twig' %}
 
 {% block content %}
-    <h1>Projection</h1>
-    <table class="table">
+    <div class="px-4 sm:px-6 lg:px-8">
 
-        <tbody>
-        <tr>
-            <th>Name</th>
-            <th>Version</th>
-            <th>Position</th>
-            <th>Status</th>
-            <th>Error Message</th>
-            <th></th>
-        </tr>
-        </tbody>
-            {% for projection in projections %}
-                <tr>
-                    <td>{{ projection.id.name }}</td>
-                    <td>{{ projection.id.version }}</td>
-                    <td>{{ projection.position }} / {{ messageCount }}</td>
-                    <td>{{ projection.status.value }}</td>
-                    <td>{{ projection.error.message|default }}</td>
-                    <td>
-                        <a href="{{ path('patchlevel_eventsourcingadmin_projection_rebuild', {'id': projection.id.toString}) }}" class="btn btn-danger">Rebuild</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        <tbody>
+        <!-- Headline -->
+        <div class="text-2xl font-bold mb-8">
+            Projections
+        </div>
 
-        </tbody>
-    </table>
+        <div class="mt-8 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ">
+                                    ID
+                                </th>
+                                <th scope="col"
+                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ">
+                                    Name
+                                </th>
+                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
+                                    Version
+                                </th>
+                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
+                                    Position
+                                </th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Status
+                                </th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6"></th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                            {% for projection in projections|sort((a, b) => a.id.version <=> b.id.version)|sort((a, b) => a.id.name <=> b.id.name) %}
+                                <tr class="group/row">
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ projection.id.toString }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ projection.id.name }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right">
+                                        {{ projection.id.version }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right">
+                                        {{ projection.position }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {% if projection.status.value == 'new' %}
+                                            {{ _self.badge('New', 'blue') }}
+                                        {% elseif projection.status.value == 'booting' %}
+                                            {{ _self.badge('Booting', 'yellow') }}
+                                        {% elseif projection.status.value == 'active' %}
+                                            {{ _self.badge('Active', 'green') }}
+                                        {% elseif projection.status.value == 'outdated' %}
+                                            {{ _self.badge('Outdated', 'gray') }}
+                                        {% elseif projection.status.value == 'error' %}
+                                            {{ _self.badge('Error', 'red') }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="relative flex gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-6">
+
+                                        {% if projection.status.value == 'outdated' %}
+                                            <a href="#" class="text-gray-500 hover:text-gray-900"
+                                               data-modal="modal-{{ loop.index }}">
+                                                {{ heroicon('trash', 'h-5 w-5') }}
+                                            </a>
+                                        {% endif %}
+
+                                        {% if projection.status.value == 'new' %}
+                                            <a href="#" class="text-gray-500 hover:text-gray-900"
+                                               data-modal="modal-{{ loop.index }}">
+                                                {{ heroicon('play', 'h-5 w-5') }}
+                                            </a>
+                                        {% endif %}
+
+                                        {% if projection.status.value == 'error' %}
+                                            <a href="#" class="text-gray-500 hover:text-gray-900"
+                                               data-modal="modal-{{ loop.index }}">
+                                                {{ heroicon('arrow-path', 'h-5 w-5') }}
+                                            </a>
+                                        {% endif %}
+
+                                        <a href="#" class="text-gray-500 hover:text-gray-900"
+                                           data-modal="modal-{{ loop.index }}">
+                                            {{ heroicon('magnifying-glass', 'h-5 w-5') }}
+                                        </a>
+                                        <dialog id="modal-{{ loop.index }}"
+                                                class="relative text-left rounded p-8 w-3/4">
+                                            <form method="dialog" class="text-right static right-0">
+                                                <button>
+                                                    {{ heroicon('x-mark', 'h-5 w-5') }}
+                                                </button>
+                                            </form>
+
+                                            todo
+                                        </dialog>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      document.querySelectorAll("[data-modal]").forEach(function(button) {
+        button.addEventListener("click", function() {
+          var dialog = document.getElementById(button.dataset.modal);
+          dialog.showModal();
+          dialog.querySelector("button").addEventListener("click", function() {
+            dialog.close();
+          });
+        });
+      });
+    </script>
+
 {% endblock %}
+
+{% macro badge(label, color) %}
+    <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-gray-900 ring-1 ring-inset ring-gray-200">
+  <svg class="h-1.5 w-1.5 fill-{{ color }}-500" viewBox="0 0 6 6" aria-hidden="true">
+    <circle cx="3" cy="3" r="3" />
+  </svg>
+  {{ label }}
+</span>
+{% endmacro %}

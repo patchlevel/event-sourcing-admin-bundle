@@ -1,0 +1,220 @@
+{% extends '@PatchlevelEventSourcingAdmin/layout.html.twig' %}
+
+{% block content %}
+    <div class="px-4 sm:px-6 lg:px-8">
+
+        <!-- Headline -->
+        <div class="text-2xl font-bold mb-8">
+            Inspection
+        </div>
+
+        <div class="">
+            <form class="flex gap-2 items-end" action="{{ path('patchlevel_event_sourcing_admin_store_show') }}">
+                <div class="w-48">
+                    <label for="aggregate" class="block text-xs font-medium leading-6 text-gray-900">Aggregate</label>
+                    <select id="aggregate" name="aggregate"
+                            class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <option {% if app.request.get('aggregate') == "" %}selected{% endif %}
+                                value="">-- choose --
+                        </option>
+                        {% for aggregate in aggregates %}
+                            <option {% if app.request.get('aggregate') == aggregate %}selected{% endif %}
+                                    value="{{ aggregate }}">{{ aggregate }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="w-96">
+                    <label for="aggregateId" class="block text-xs font-medium leading-6 text-gray-900">Aggregate
+                        ID</label>
+                    <div class="mt-1">
+                        <input type="text" name="aggregateId" id="aggregateId"
+                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="018d233e-7906-73f1-8a0c-f76a4fdac34e"
+                               value="{{ app.request.get('aggregateId') }}">
+                    </div>
+                </div>
+
+                <button type="submit"
+                        class="rounded-md bg-indigo-600 px-2.5 py-1.5 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    {{ heroicon('identification', 'h-6 w-6') }}
+                </button>
+
+                {% if app.request.get('aggregate') or app.request.get('aggregateId') %}
+                    <a class="rounded-md bg-red-600 px-2.5 py-1.5 font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                       href="{{ path('patchlevel_event_sourcing_admin_store_show') }}">
+                        {{ heroicon('backspace', 'h-6 w-6') }}
+                    </a>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="flex mt-8">
+            <div class="w-1/2">
+
+            </div>
+
+            <div class="flow-root w-1/2">
+                <ul role="list" class="-mb-8">
+                    {% for message in messages %}
+                        <li class="group/message">
+                            <div class="relative pb-8">
+                                <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
+                                      aria-hidden="true"></span>
+                                <div class="relative flex space-x-3">
+                                    <div>
+                                <span {% if eventsourcing_inspection_color(message.event) %}style="background: {{ eventsourcing_inspection_color(message.event) }};"{% endif %} class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
+                                    {{ heroicon(eventsourcing_inspection_icon(message.event, 'calendar'), 'h-5 w-5 text-white') }}
+                                </span>
+                                    </div>
+                                    <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                        <div>
+                                            <p class="text-sm text-gray-500">
+                                                {{ eventsourcing_inspection_description(message.event, eventsourcing_event_name(message)) }}
+                                                <a href="#"
+                                                   class="text-gray-500 hover:text-gray-900 invisible group-hover/message:visible"
+                                                   data-modal="modal-{{ loop.index }}">
+                                                    {{ heroicon('magnifying-glass', 'h-5 w-5 inline') }}
+                                                </a>
+                                            </p>
+                                            <dialog id="modal-{{ loop.index }}"
+                                                    class="relative text-left rounded p-8 w-3/4">
+                                                <form method="dialog" class="text-right static right-0">
+                                                    <button>
+                                                        {{ heroicon('x-mark', 'h-5 w-5') }}
+                                                    </button>
+                                                </form>
+
+                                                {{ include('@PatchlevelEventSourcingAdmin/store/detail.html.twig', {
+                                                    message: message,
+                                                }) }}
+                                            </dialog>
+                                        </div>
+                                        <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                            {{ message.recordedOn|date }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    {#
+                    <li>
+                        <div class="relative pb-8">
+                            <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                            <div class="relative flex space-x-3">
+                                <div>
+                <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                  <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M1 8.25a1.25 1.25 0 112.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM11 3V1.7c0-.268.14-.526.395-.607A2 2 0 0114 3c0 .995-.182 1.948-.514 2.826-.204.54.166 1.174.744 1.174h2.52c1.243 0 2.261 1.01 2.146 2.247a23.864 23.864 0 01-1.341 5.974C17.153 16.323 16.072 17 14.9 17h-3.192a3 3 0 01-1.341-.317l-2.734-1.366A3 3 0 006.292 15H5V8h.963c.685 0 1.258-.483 1.612-1.068a4.011 4.011 0 012.166-1.73c.432-.143.853-.386 1.011-.814.16-.432.248-.9.248-1.388z" />
+                  </svg>
+                </span>
+                                </div>
+                                <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Advanced to phone screening by <a href="#"
+                                                                                                           class="font-medium text-gray-900">Bethany
+                                                Blake</a></p>
+                                    </div>
+                                    <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                        <time datetime="2020-09-22">Sep 22</time>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="relative pb-8">
+                            <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                            <div class="relative flex space-x-3">
+                                <div>
+                <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+                  <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                          clip-rule="evenodd" />
+                  </svg>
+                </span>
+                                </div>
+                                <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Completed phone screening with <a href="#"
+                                                                                                           class="font-medium text-gray-900">Martha
+                                                Gardner</a></p>
+                                    </div>
+                                    <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                        <time datetime="2020-09-28">Sep 28</time>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="relative pb-8">
+                            <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                            <div class="relative flex space-x-3">
+                                <div>
+                <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                  <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M1 8.25a1.25 1.25 0 112.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM11 3V1.7c0-.268.14-.526.395-.607A2 2 0 0114 3c0 .995-.182 1.948-.514 2.826-.204.54.166 1.174.744 1.174h2.52c1.243 0 2.261 1.01 2.146 2.247a23.864 23.864 0 01-1.341 5.974C17.153 16.323 16.072 17 14.9 17h-3.192a3 3 0 01-1.341-.317l-2.734-1.366A3 3 0 006.292 15H5V8h.963c.685 0 1.258-.483 1.612-1.068a4.011 4.011 0 012.166-1.73c.432-.143.853-.386 1.011-.814.16-.432.248-.9.248-1.388z" />
+                  </svg>
+                </span>
+                                </div>
+                                <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Advanced to interview by <a href="#"
+                                                                                                     class="font-medium text-gray-900">Bethany
+                                                Blake</a></p>
+                                    </div>
+                                    <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                        <time datetime="2020-09-30">Sep 30</time>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="relative pb-8">
+                            <div class="relative flex space-x-3">
+                                <div>
+                <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+                  <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                          clip-rule="evenodd" />
+                  </svg>
+                </span>
+                                </div>
+                                <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Completed interview with <a href="#"
+                                                                                                     class="font-medium text-gray-900">Katherine
+                                                Snyder</a></p>
+                                    </div>
+                                    <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                        <time datetime="2020-10-04">Oct 4</time>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    #}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+      document.querySelectorAll("[data-modal]").forEach(function(button) {
+        button.addEventListener("click", function() {
+          var dialog = document.getElementById(button.dataset.modal);
+          dialog.showModal();
+          dialog.querySelector("button").addEventListener("click", function() {
+            dialog.close();
+          });
+        });
+      });
+    </script>
+
+{% endblock %}

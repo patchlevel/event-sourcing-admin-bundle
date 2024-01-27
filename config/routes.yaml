@@ -13,3 +13,7 @@ patchlevel_event_sourcing_admin_projection_show:
 patchlevel_eventsourcingadmin_projection_rebuild:
   path: /projection/rebuild
   controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::rebuildAction
+
+patchlevel_event_sourcing_admin_inspection_show:
+  path: /inspection
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\InspectionController::showAction

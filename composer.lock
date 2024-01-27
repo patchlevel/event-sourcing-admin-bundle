@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b726633e603711a97d589b2f34655fb4",
+    "content-hash": "5e2cf77316866750556ef39a0545cc5d",
     "packages": [
         {
             "name": "brick/math",
@@ -156,16 +156,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.7.3",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "ce594cbc39a4866c544f1a970d285ff0548221ad"
+                "reference": "d244f2e6e6bf32bff5174e6729b57214923ecec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/ce594cbc39a4866c544f1a970d285ff0548221ad",
-                "reference": "ce594cbc39a4866c544f1a970d285ff0548221ad",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/d244f2e6e6bf32bff5174e6729b57214923ecec9",
+                "reference": "d244f2e6e6bf32bff5174e6729b57214923ecec9",
                 "shasum": ""
             },
             "require": {
@@ -249,7 +249,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.7.3"
+                "source": "https://github.com/doctrine/dbal/tree/3.8.0"
             },
             "funding": [
                 {
@@ -265,7 +265,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-21T07:53:09+00:00"
+            "time": "2024-01-25T21:44:02+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -407,16 +407,16 @@
         },
         {
             "name": "patchlevel/event-sourcing",
-            "version": "3.0.0-rc3",
+            "version": "3.0.0-rc4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing.git",
-                "reference": "b0e4be2d2043aaef91976766ebceb0f0cdbc33b4"
+                "reference": "789977639dfa0ef5e39935ce2bc56c98edbaa4ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing/zipball/b0e4be2d2043aaef91976766ebceb0f0cdbc33b4",
-                "reference": "b0e4be2d2043aaef91976766ebceb0f0cdbc33b4",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing/zipball/789977639dfa0ef5e39935ce2bc56c98edbaa4ba",
+                "reference": "789977639dfa0ef5e39935ce2bc56c98edbaa4ba",
                 "shasum": ""
             },
             "require": {
@@ -487,26 +487,26 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing/issues",
-                "source": "https://github.com/patchlevel/event-sourcing/tree/3.0.0-rc3"
+                "source": "https://github.com/patchlevel/event-sourcing/tree/3.0.0-rc4"
             },
-            "time": "2024-01-15T12:51:11+00:00"
+            "time": "2024-01-25T15:47:20+00:00"
         },
         {
             "name": "patchlevel/event-sourcing-bundle",
-            "version": "3.0.0-rc2",
+            "version": "3.0.0-rc3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing-bundle.git",
-                "reference": "5d506fcc5d9984fa04c95b98e77503de82818cb0"
+                "reference": "38753fec505c319557aa5bb04a42dac6019e9ed1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/5d506fcc5d9984fa04c95b98e77503de82818cb0",
-                "reference": "5d506fcc5d9984fa04c95b98e77503de82818cb0",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/38753fec505c319557aa5bb04a42dac6019e9ed1",
+                "reference": "38753fec505c319557aa5bb04a42dac6019e9ed1",
                 "shasum": ""
             },
             "require": {
-                "patchlevel/event-sourcing": "3.0.0-rc3",
+                "patchlevel/event-sourcing": "3.0.0-rc4",
                 "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
                 "symfony/config": "^5.4.31|^6.4.0|^7.0.0",
                 "symfony/console": "^5.4.32|^6.4.1|^7.0.1",
@@ -567,9 +567,9 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing-bundle/issues",
-                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.0.0-rc2"
+                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.0.0-rc3"
             },
-            "time": "2024-01-15T14:04:41+00:00"
+            "time": "2024-01-27T09:55:28+00:00"
         },
         {
             "name": "patchlevel/hydrator",
