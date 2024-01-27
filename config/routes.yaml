@@ -2,6 +2,10 @@ patchlevel_event_sourcing_admin_default_index:
   path: /
   controller: Patchlevel\EventSourcingAdminBundle\Controller\DefaultController::indexAction
 
+patchlevel_event_sourcing_admin_default_dashboard:
+  path: /dashboard
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\DefaultController::dashboardAction
+
 patchlevel_event_sourcing_admin_store_show:
   path: /store
   controller: Patchlevel\EventSourcingAdminBundle\Controller\StoreController::showAction
@@ -14,6 +18,10 @@ patchlevel_eventsourcingadmin_projection_rebuild:
   path: /projection/rebuild
   controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::rebuildAction
 
-patchlevel_event_sourcing_admin_inspection_show:
+patchlevel_event_sourcing_admin_inspection_index:
   path: /inspection
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\InspectionController::indexAction
+
+patchlevel_event_sourcing_admin_inspection_show:
+  path: /inspection/{aggregateName}/{aggregateId}
   controller: Patchlevel\EventSourcingAdminBundle\Controller\InspectionController::showAction

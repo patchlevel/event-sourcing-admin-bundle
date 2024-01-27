@@ -8,17 +8,27 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 final class DefaultController
 {
     public function __construct(
+        private readonly Environment $twig,
         private readonly RouterInterface $router,
     ) {
     }
 
-    #[Route('/')]
     public function indexAction(): Response
     {
-        return new RedirectResponse($this->router->generate('patchlevel_event_sourcing_admin_store_show'));
+        return new RedirectResponse(
+            $this->router->generate('patchlevel_event_sourcing_admin_default_show'),
+        );
+    }
+
+    public function dashboardAction(): Response
+    {
+        return new Response(
+            $this->twig->render('@PatchlevelEventSourcingAdmin/default/dashboard.html.twig'),
+        );
     }
 }

@@ -2,7 +2,6 @@
 
 {% block body %}
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-        <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6">
             <div class="flex h-20 shrink-0 items-center text-indigo-200 leading-6 font-semibold">
                 EventSourcing Admin
@@ -11,10 +10,10 @@
                 <ul role="list" class="flex flex-1 flex-col gap-y-7">
                     <li>
                         <ul role="list" class="-mx-2 space-y-1">
-                            {{ _self.nav_point("Dashboard", "chart-pie", "patchlevel_event_sourcing_admin_store_show") }}
+                            {{ _self.nav_point("Dashboard", "chart-pie", "patchlevel_event_sourcing_admin_default_dashboard") }}
                             {{ _self.nav_point("Store", "circle-stack", "patchlevel_event_sourcing_admin_store_show") }}
                             {{ _self.nav_point("Projections", "video-camera", "patchlevel_event_sourcing_admin_projection_show") }}
-                            {{ _self.nav_point("Inspection", "identification", "patchlevel_event_sourcing_admin_inspection_show") }}
+                            {{ _self.nav_point("Inspection", "identification", "patchlevel_event_sourcing_admin_inspection_index") }}
                         </ul>
                     </li>
                     <li class="-mx-6 mt-auto">

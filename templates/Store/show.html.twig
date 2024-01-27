@@ -93,7 +93,7 @@
                                            class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
                                             {{ heroicon('funnel', 'h-5 w-5 inline') }}
                                         </a>
-                                        <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregate: eventsourcing_aggregate_name(message), aggregateId: message.aggregateId }) }}"
+                                        <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateName: eventsourcing_aggregate_name(message), aggregateId: message.aggregateId }) }}"
                                            class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
                                             {{ heroicon('identification', 'h-5 w-5 inline') }}
                                         </a>

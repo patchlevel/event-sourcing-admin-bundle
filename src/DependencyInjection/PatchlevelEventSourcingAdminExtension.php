@@ -17,8 +17,10 @@ use Patchlevel\EventSourcingAdminBundle\Controller\StoreController;
 use Patchlevel\EventSourcingAdminBundle\Twig\EventSourcingAdminExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\HeroiconsExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\InspectionExtension;
+use Patchlevel\Hydrator\Hydrator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -62,6 +64,7 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
                 new Reference(Store::class),
                 new Reference(RepositoryManager::class),
                 new Reference(AggregateRootRegistry::class),
+                new Reference(Hydrator::class),
             ])
             ->addTag('controller.service_arguments');
 
@@ -85,7 +88,12 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
         $container->register(HeroiconsExtension::class)
             ->addTag('twig.extension');
 
+        $container->register('event_sourcing_admin.expression_language', ExpressionLanguage::class);
+
         $container->register(InspectionExtension::class)
+            ->setArguments([
+                new Reference('event_sourcing_admin.expression_language'),
+            ])
             ->addTag('twig.extension');
     }
 }
