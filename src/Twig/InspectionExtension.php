@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace Patchlevel\EventSourcingAdminBundle\Twig;
 
 use Patchlevel\EventSourcingAdminBundle\Attribute\Inspect;
+use Patchlevel\EventSourcingAdminBundle\Color;
+use ReflectionClass;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+
+use function count;
+use function preg_replace;
+use function preg_replace_callback;
 
 final class InspectionExtension extends AbstractExtension
 {
@@ -16,8 +22,7 @@ final class InspectionExtension extends AbstractExtension
 
     public function __construct(
         private readonly ExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     /** @return list<TwigFunction> */
@@ -49,20 +54,34 @@ final class InspectionExtension extends AbstractExtension
 
         $message = preg_replace_callback(
             '/\{\{ (.+) \}\}/U',
-            fn($matches) => $this->expressionLanguage->evaluate($matches[1], [
-                'event' => $event,
-            ]),
-            $template
+            fn ($matches) => $this->expressionLanguage->evaluate($matches[1], ['event' => $event]),
+            $template,
         );
 
-        return preg_replace('/\*\*([\w\s]+)\*\*/U', '<b>$1</b>', $message);
+        return preg_replace(
+            [
+                '/\*\*([\S\s]+)\*\*/U', // **foo** -> <b>foo</b>
+                '/\*([\S\s]+)\*/', // *foo* -> <i>foo</i>
+            ],
+            [
+                '<b>$1</b>',
+                '<i>$1</i>',
+            ],
+            $message,
+        );
     }
 
-    private function color(object $event, string|null $default = null): string|null
+    private function color(object $event, string|Color|null $default = null): string|null
     {
         $inspect = $this->inspect($event);
 
-        return $inspect->color ?: $default;
+        $result = $inspect->color ?: $default;
+
+        if ($result instanceof Color) {
+            return $result->value;
+        }
+
+        return $result;
     }
 
     private function inspect(object $event): Inspect
@@ -71,7 +90,7 @@ final class InspectionExtension extends AbstractExtension
             return $this->cache[$event::class];
         }
 
-        $reflection = new \ReflectionClass($event);
+        $reflection = new ReflectionClass($event);
         $attributes = $reflection->getAttributes(Inspect::class);
 
         if (count($attributes) === 0) {

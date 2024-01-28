@@ -9,7 +9,7 @@
     </div>
 
     <div class="">
-        <form class="flex gap-2 items-end" action="{{ path('patchlevel_event_sourcing_admin_inspection_index') }}">
+        <form method="post" class="flex gap-2 items-end" action="{{ path('patchlevel_event_sourcing_admin_inspection_index') }}">
             <div class="w-48">
                 <label for="aggregate" class="block text-xs font-medium leading-6 text-gray-900">Aggregate</label>
                 <select id="aggregate" name="aggregate"

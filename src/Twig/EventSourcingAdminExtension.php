@@ -12,6 +12,8 @@ use Patchlevel\EventSourcing\Serializer\EventSerializer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+use function array_pop;
+use function explode;
 use function get_class;
 
 final class EventSourcingAdminExtension extends AbstractExtension

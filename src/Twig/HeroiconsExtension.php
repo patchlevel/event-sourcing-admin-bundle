@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\Twig;
 
+use RuntimeException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+
+use function file_exists;
+use function file_get_contents;
+use function sprintf;
+use function str_replace;
 
 final class HeroiconsExtension extends AbstractExtension
 {
@@ -14,9 +20,7 @@ final class HeroiconsExtension extends AbstractExtension
     /** @return list<TwigFunction> */
     public function getFunctions(): array
     {
-        return [
-            new TwigFunction('heroicon', $this->heroicon(...), ['is_safe' => ['html']])
-        ];
+        return [new TwigFunction('heroicon', $this->heroicon(...), ['is_safe' => ['html']])];
     }
 
     private function heroicon(string $icon, string|null $class = null): string
@@ -28,7 +32,7 @@ final class HeroiconsExtension extends AbstractExtension
         $path = $this->iconPath($icon);
 
         if (!file_exists($path)) {
-            throw new \RuntimeException(sprintf('heroicon "%s" not found', $icon));
+            throw new RuntimeException(sprintf('heroicon "%s" not found', $icon));
         }
 
         $this->cache[$icon] = file_get_contents($path);

@@ -64,28 +64,6 @@
                                         {% endif %}
                                     </td>
                                     <td class="relative flex gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-6">
-
-                                        {% if projection.status.value == 'outdated' %}
-                                            <a href="#" class="text-gray-500 hover:text-gray-900"
-                                               data-modal="modal-{{ loop.index }}">
-                                                {{ heroicon('trash', 'h-5 w-5') }}
-                                            </a>
-                                        {% endif %}
-
-                                        {% if projection.status.value == 'new' %}
-                                            <a href="#" class="text-gray-500 hover:text-gray-900"
-                                               data-modal="modal-{{ loop.index }}">
-                                                {{ heroicon('play', 'h-5 w-5') }}
-                                            </a>
-                                        {% endif %}
-
-                                        {% if projection.status.value == 'error' %}
-                                            <a href="#" class="text-gray-500 hover:text-gray-900"
-                                               data-modal="modal-{{ loop.index }}">
-                                                {{ heroicon('arrow-path', 'h-5 w-5') }}
-                                            </a>
-                                        {% endif %}
-
                                         <a href="#" class="text-gray-500 hover:text-gray-900"
                                            data-modal="modal-{{ loop.index }}">
                                             {{ heroicon('magnifying-glass', 'h-5 w-5') }}
@@ -98,7 +76,9 @@
                                                 </button>
                                             </form>
 
-                                            todo
+                                            {{ include('@PatchlevelEventSourcingAdmin/projection/detail.html.twig', {
+                                                projection: projection,
+                                            }) }}
                                         </dialog>
                                     </td>
                                 </tr>

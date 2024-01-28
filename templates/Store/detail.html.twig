@@ -5,7 +5,7 @@
     {{ _self.text('Aggregate Playhead', message.playhead) }}
     {{ _self.text('Event Name', eventsourcing_event_name(message)) }}
     {{ _self.text('Event Class', eventsourcing_event_class(message)) }}
-    {{ _self.text('Recorded on', message.recordedOn|date) }}
+    {{ _self.text('Recorded on', message.recordedOn|date('Y-m-d H:i:s')) }}
     {{ _self.json('Event Payload', eventsourcing_event_payload(message)) }}
     {% if message.customHeaders %}
         {{ _self.json('Custom Headers', message.customHeaders|json_encode(constant('JSON_PRETTY_PRINT'))) }}

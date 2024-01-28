@@ -6,7 +6,6 @@ namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -21,14 +20,7 @@ final class DefaultController
     public function indexAction(): Response
     {
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_default_show'),
-        );
-    }
-
-    public function dashboardAction(): Response
-    {
-        return new Response(
-            $this->twig->render('@PatchlevelEventSourcingAdmin/default/dashboard.html.twig'),
+            $this->router->generate('patchlevel_event_sourcing_admin_store_show'),
         );
     }
 }

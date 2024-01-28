@@ -8,91 +8,182 @@
             Inspection
         </div>
 
-        <div class="flex mt-8 gap-4">
-            <div class="w-1/2">
-                <div class="mb-8">
-                    <div class="sm:hidden">
-                        <label for="tabs" class="sr-only">Select a tab</label>
-                        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-                        <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                            <option>My Account</option>
-                            <option>Company</option>
-                            <option selected>Team Members</option>
-                            <option>Billing</option>
-                        </select>
-                    </div>
-                    <div class="hidden sm:block">
-                        <div class="border-b border-gray-200">
-                            <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                                <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-                                <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">Detail</a>
-                                <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">Dump</a>
-                                <a href="#" class="border-indigo-500 text-indigo-600 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" aria-current="page">Serialized</a>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
+        {% if until %}
+            <div class="fixed flex bg-indigo-600 p-6 z-10 bottom-8 right-8 rounded">
+                <p class="text-sm leading-6 text-white">
+                    <strong class="font-semibold">Time travel:</strong>
 
-                <dl class="divide-y divide-gray-100">
-                    {{ _self.text('ID', aggregateId) }}
-                    {{ _self.text('Name', aggregateName) }}
-                    {{ _self.text('Class', aggregateClass) }}
-                    {{ _self.text('Playhead', aggregate.playhead) }}
-                </dl>
+                    <span class="mr-4">
+                        playhead {{ aggregate.playhead }} from {{ count }}
+                    </span>
 
-                {{ dump(aggregate) }}
+                    {% if aggregate.playhead < count %}
+                        <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: until + 1 }) }}#{{ until + 1 }}"
+                           class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20 mr-2">
+                            {{ heroicon('play-pause', 'h-4 w-4 inline') }}
+                        </a>
+                    {% endif %}
 
-                <div class="json">
-                    {{~ serializedAggregate ~}}
-                </div>
+                    <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab }) }}"
+                       class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
+                        {{ heroicon('stop', 'h-4 w-4 inline') }}
+                    </a>
+                </p>
             </div>
+        {% endif %}
 
-            <div class="flow-root w-1/2">
-                <ul role="list" class="-mb-8">
-                    {% for message in messages %}
-                        <li class="group/message">
-                            <div class="relative pb-8">
-                                <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
-                                      aria-hidden="true"></span>
-                                <div class="relative flex space-x-3">
-                                    <div>
-                                <span {% if eventsourcing_inspection_color(message.event) %}style="background: {{ eventsourcing_inspection_color(message.event) }};"{% endif %} class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
-                                    {{ heroicon(eventsourcing_inspection_icon(message.event, 'calendar'), 'h-5 w-5 text-white') }}
-                                </span>
+        <div class="flex mt-8 gap-4 relative items-start {% if until %}pb-28{% endif %}">
+            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow w-1/2 sticky top-4">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="mb-8">
+                        <nav class="flex space-x-4" aria-label="Tabs">
+                            {% for key, label in {
+                                'details': 'Details',
+                                'serialized': 'Serialized',
+                                'dump': 'Dump',
+                                'snapshot': 'Snapshot',
+                            } %}
+                                {% if key == tab %}
+                                    <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: key, until: until }) }}{% if until %}#{{ until }}{% endif %}"
+                                       class="bg-gray-100 text-gray-700 rounded-md px-3 py-2 text-sm font-medium"
+                                       aria-current="page">{{ label }}</a>
+                                {% else %}
+                                    <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: key, until: until }) }}{% if until %}#{{ until }}{% endif %}"
+                                       class="text-gray-500 hover:text-gray-700 rounded-md px-3 py-2 text-sm font-medium">{{ label }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </nav>
+                    </div>
+
+                    {% if tab == 'details' %}
+                        <dl class="divide-y divide-gray-100">
+                            {{ _self.text('ID', aggregateId) }}
+                            {{ _self.text('Name', aggregateName) }}
+                            {{ _self.text('Class', aggregateClass) }}
+                            {{ _self.text('Playhead', aggregate.playhead) }}
+
+                            {% if metadata.snapshot %}
+                            {{ _self.text('Snapshot Adapter', metadata.snapshot.store) }}
+                            {{ _self.text('Snapshot Version', metadata.snapshot.version) }}
+                            {{ _self.text('Snapshot Batch', metadata.snapshot.batch) }}
+                            {% endif %}
+
+                        </dl>
+                    {% endif %}
+
+                    {% if tab == 'dump' %}
+                        {{ dump(aggregate) }}
+                    {% endif %}
+
+                    {% if tab == 'serialized' %}
+                        {% if serializedError %}
+                            <div class="rounded-md bg-red-50 p-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                        </svg>
                                     </div>
-                                    <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                                        <div>
-                                            <p class="text-sm text-gray-500">
-                                                {{ eventsourcing_inspection_description(message.event, eventsourcing_event_name(message)) }}
-                                                <a href="#"
-                                                   class="text-gray-500 hover:text-gray-900 invisible group-hover/message:visible"
-                                                   data-modal="modal-{{ loop.index }}">
-                                                    {{ heroicon('magnifying-glass', 'h-5 w-5 inline') }}
-                                                </a>
-                                            </p>
-                                            <dialog id="modal-{{ loop.index }}"
-                                                    class="relative text-left rounded p-8 w-3/4">
-                                                <form method="dialog" class="text-right static right-0">
-                                                    <button>
-                                                        {{ heroicon('x-mark', 'h-5 w-5') }}
-                                                    </button>
-                                                </form>
-
-                                                {{ include('@PatchlevelEventSourcingAdmin/store/detail.html.twig', {
-                                                    message: message,
-                                                }) }}
-                                            </dialog>
-                                        </div>
-                                        <div class="whitespace-nowrap text-right text-sm text-gray-500">
-                                            {{ message.recordedOn|date }}
-                                        </div>
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-red-800">{{ serializedError }}</h3>
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                    {% endfor %}
-                </ul>
+                        {% endif %}
+
+                        {% if serializedAggregate %}
+                            <div class="json text-sm bg-gray-50 px-4 rounded">
+                                {{~ serializedAggregate ~}}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+
+                    {% if tab == 'snapshot' %}
+                        {% if snapshotError %}
+                            <div class="rounded-md bg-red-50 p-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-red-800">{{ snapshotError }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if snapshot %}
+                            {{ dump(snapshot) }}
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
+
+
+            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow w-1/2">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flow-root">
+                        <ul role="list" class="-mb-8">
+                            {% for message in messages %}
+                                <li class="group/message relative {% if until and loop.index > until %}saturate-0{% endif %}">
+                                    <span id="{{ loop.index }}" class="absolute -top-48"></span>
+                                    <div class="relative pb-8">
+                                        {% if loop.index != count %}
+                                            <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
+                                                  aria-hidden="true"></span>
+                                        {% endif %}
+                                        <div class="relative flex space-x-3">
+                                            <div>
+                                <span {% if eventsourcing_inspection_color(message.event) %}style="background: {{ eventsourcing_inspection_color(message.event) }};"{% endif %}
+                                      class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center {% if loop.index == until %}border-2 border-white ring-red-700 ring-4{% else %}ring-8 ring-white{% endif %}">
+                                    {{ heroicon(eventsourcing_inspection_icon(message.event, 'calendar'), 'h-5 w-5 text-white') }}
+                                </span>
+                                            </div>
+                                            <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                                <div>
+                                                    <p class="text-sm text-gray-500">
+                                                        {{ eventsourcing_inspection_description(message.event, eventsourcing_event_name(message)) }}
+                                                        <button
+                                                                class="text-gray-500 hover:text-gray-900 invisible group-hover/message:visible"
+                                                                data-modal="modal-{{ loop.index }}">
+                                                            {{ heroicon('magnifying-glass', 'h-5 w-5 inline') }}
+                                                        </button>
+                                                        <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: message.playhead }) }}#{{ message.playhead }}"
+                                                           class="text-gray-500 hover:text-gray-900 invisible group-hover/message:visible"
+                                                        >
+                                                            {{ heroicon('backward', 'h-5 w-5 inline') }}
+                                                        </a>
+                                                    </p>
+                                                    <dialog id="modal-{{ loop.index }}"
+                                                            class="relative text-left rounded p-8 w-3/4">
+                                                        <form method="dialog" class="text-right static right-0">
+                                                            <button>
+                                                                {{ heroicon('x-mark', 'h-5 w-5') }}
+                                                            </button>
+                                                        </form>
+
+                                                        {{ include('@PatchlevelEventSourcingAdmin/store/detail.html.twig', {
+                                                            message: message,
+                                                        }) }}
+                                                    </dialog>
+                                                </div>
+                                                <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                                    {{ message.recordedOn|date('Y-m-d H:i:s') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -114,6 +205,13 @@
 {% macro text(name, content) %}
     <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">{{ name }}</dt>
-        <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">{{ content }}</dd>
+        <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
+            {% if content == null %}
+                ~
+            {% else %}
+                {{ content }}
+            {% endif %}
+        </dd>
     </div>
 {% endmacro %}
+

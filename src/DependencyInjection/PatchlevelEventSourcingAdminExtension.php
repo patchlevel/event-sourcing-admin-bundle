@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\DependencyInjection;
 
+use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootMetadataFactory;
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
 use Patchlevel\EventSourcing\Projection\Projectionist\Projectionist;
-use Patchlevel\EventSourcing\Repository\RepositoryManager;
 use Patchlevel\EventSourcing\Serializer\EventSerializer;
+use Patchlevel\EventSourcing\Snapshot\SnapshotStore;
 use Patchlevel\EventSourcing\Store\Store;
 use Patchlevel\EventSourcingAdminBundle\Controller\DefaultController;
 use Patchlevel\EventSourcingAdminBundle\Controller\InspectionController;
@@ -61,10 +62,12 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
         $container->register(InspectionController::class)
             ->setArguments([
                 new Reference('twig'),
+                new Reference(RouterInterface::class),
                 new Reference(Store::class),
-                new Reference(RepositoryManager::class),
                 new Reference(AggregateRootRegistry::class),
+                new Reference(AggregateRootMetadataFactory::class),
                 new Reference(Hydrator::class),
+                new Reference(SnapshotStore::class),
             ])
             ->addTag('controller.service_arguments');
 
