@@ -44,8 +44,9 @@ final class InspectionController
     public function indexAction(Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
-            $aggregateName = $request->request->get('aggregateName');
-            $aggregateId = $request->request->get('aggregateId');
+
+            $aggregateName = $request->get('aggregate');
+            $aggregateId = $request->get('aggregateId');
 
             if ($aggregateName === null || $aggregateId === null) {
                 throw new NotFoundHttpException('aggregateName and aggregateId are required');
@@ -53,8 +54,8 @@ final class InspectionController
 
             return new RedirectResponse(
                 $this->router->generate('patchlevel_event_sourcing_admin_inspection_show', [
-                    'aggregateName' => $request->request->get('aggregateName'),
-                    'aggregateId' => $request->request->get('aggregateId'),
+                    'aggregateName' => $aggregateName,
+                    'aggregateId' => $aggregateId,
                 ]),
             );
         }
