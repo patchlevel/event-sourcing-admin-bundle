@@ -47,7 +47,7 @@ final class HeroiconsExtension extends AbstractExtension
 
     private function iconBasePath(): string
     {
-        return __DIR__ . '/../../icons';
+        return __DIR__ . '/../../public/build/icons';
     }
 
     private function injectClass(string $svg, string|null $class = null): string

@@ -15,11 +15,16 @@ use Patchlevel\EventSourcingAdminBundle\Controller\DefaultController;
 use Patchlevel\EventSourcingAdminBundle\Controller\InspectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\StoreController;
+use Patchlevel\EventSourcingAdminBundle\Decorator\RequestIdDecorator;
+use Patchlevel\EventSourcingAdminBundle\Listener\RequestIdListener;
+use Patchlevel\EventSourcingAdminBundle\Listener\TokenMapperListener;
+use Patchlevel\EventSourcingAdminBundle\TokenMapper;
 use Patchlevel\EventSourcingAdminBundle\Twig\EventSourcingAdminExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\HeroiconsExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\InspectionExtension;
 use Patchlevel\Hydrator\Hydrator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -85,6 +90,7 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
                 new Reference(AggregateRootRegistry::class),
                 new Reference(EventRegistry::class),
                 new Reference(EventSerializer::class),
+                new Reference(TokenMapper::class),
             ])
             ->addTag('twig.extension');
 
@@ -98,5 +104,33 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
                 new Reference('event_sourcing_admin.expression_language'),
             ])
             ->addTag('twig.extension');
+
+        $container->register(RequestIdDecorator::class)
+            ->setArguments([
+                new Reference('request_stack'),
+            ])
+            ->addTag('event_sourcing.message_decorator');
+
+        $container->register(RequestIdListener::class)
+            ->addTag('kernel.event_listener', [
+                'event' => 'kernel.request',
+                'method' => '__invoke',
+                'priority' => 200,
+            ]);
+
+        $container->register(TokenMapper::class)
+            ->setArguments([
+                new Parameter('kernel.cache_dir'),
+            ]);
+
+        $container->register(TokenMapperListener::class)
+            ->setArguments([
+                new Reference(TokenMapper::class),
+            ])
+            ->addTag('kernel.event_listener', [
+                'event' => 'kernel.response',
+                'method' => '__invoke',
+                'priority' => -200,
+            ]);
     }
 }

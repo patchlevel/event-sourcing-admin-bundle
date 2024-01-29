@@ -6,6 +6,19 @@
     {{ _self.text('Event Name', eventsourcing_event_name(message)) }}
     {{ _self.text('Event Class', eventsourcing_event_class(message)) }}
     {{ _self.text('Recorded on', message.recordedOn|date('Y-m-d H:i:s')) }}
+    <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Profiler Token</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
+            {% set token = eventsourcing_profiler_token(message) %}
+            {% if token %}
+                <a href="{{ path('_profiler', {token: token, panel: 'Patchlevel\\EventSourcingBundle\\DataCollector\\EventSourcingCollector'}) }}" target="_blank">
+                    {{ token }}
+                </a>
+            {% else %}
+                ~
+            {% endif %}
+        </dd>
+    </div>
     {{ _self.json('Event Payload', eventsourcing_event_payload(message)) }}
     {% if message.customHeaders %}
         {{ _self.json('Custom Headers', message.customHeaders|json_encode(constant('JSON_PRETTY_PRINT'))) }}

@@ -52,15 +52,15 @@
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {% if projection.status.value == 'new' %}
-                                            {{ _self.badge('New', 'blue') }}
+                                            {{ _self.badge('New', 'fill-blue-500') }}
                                         {% elseif projection.status.value == 'booting' %}
-                                            {{ _self.badge('Booting', 'yellow') }}
+                                            {{ _self.badge('Booting', 'fill-yellow-500') }}
                                         {% elseif projection.status.value == 'active' %}
-                                            {{ _self.badge('Active', 'green') }}
+                                            {{ _self.badge('Active', 'fill-green-500') }}
                                         {% elseif projection.status.value == 'outdated' %}
-                                            {{ _self.badge('Outdated', 'gray') }}
+                                            {{ _self.badge('Outdated', 'fill-gray-500') }}
                                         {% elseif projection.status.value == 'error' %}
-                                            {{ _self.badge('Error', 'red') }}
+                                            {{ _self.badge('Error', 'fill-red-500') }}
                                         {% endif %}
                                     </td>
                                     <td class="relative flex gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-6">
@@ -107,7 +107,7 @@
 
 {% macro badge(label, color) %}
     <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-gray-900 ring-1 ring-inset ring-gray-200">
-  <svg class="h-1.5 w-1.5 fill-{{ color }}-500" viewBox="0 0 6 6" aria-hidden="true">
+  <svg class="h-1.5 w-1.5 {{ color }}" viewBox="0 0 6 6" aria-hidden="true">
     <circle cx="3" cy="3" r="3" />
   </svg>
   {{ label }}

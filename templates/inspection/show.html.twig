@@ -4,36 +4,60 @@
     <div class="px-4 sm:px-6 lg:px-8">
 
         <!-- Headline -->
-        <div class="text-2xl font-bold mb-8">
+        <div class="flex text-2xl font-bold mb-8 place-content-between">
             Inspection
+            {% if until %}
+                <a class="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                   title="Stop time travel"
+                   href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab}) }}">
+                    {{ heroicon('stop', '-ml-0.5 h-5 w-5') }} Stop time travel
+                </a>
+            {% else %}
+            <a class="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+               title="Time travel"
+               href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: 1 }) }}#1">
+                {{ heroicon('clock', '-ml-0.5 h-5 w-5') }} Time travel
+            </a>
+            {% endif %}
         </div>
 
-        {% if until %}
-            <div class="fixed flex bg-indigo-600 p-6 z-10 bottom-8 right-8 rounded">
-                <p class="text-sm leading-6 text-white">
-                    <strong class="font-semibold">Time travel:</strong>
 
-                    <span class="mr-4">
-                        playhead {{ aggregate.playhead }} from {{ count }}
-                    </span>
-
-                    {% if aggregate.playhead < count %}
-                        <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: until + 1 }) }}#{{ until + 1 }}"
-                           class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20 mr-2">
-                            {{ heroicon('play-pause', 'h-4 w-4 inline') }}
-                        </a>
-                    {% endif %}
-
-                    <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab }) }}"
-                       class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
-                        {{ heroicon('stop', 'h-4 w-4 inline') }}
-                    </a>
-                </p>
-            </div>
-        {% endif %}
-
-        <div class="flex mt-8 gap-4 relative items-start {% if until %}pb-28{% endif %}">
+        <div class="flex mt-8 gap-4 items-start">
             <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow w-1/2 sticky top-4">
+
+                {% if until %}
+                    <div class="flex bg-indigo-600 p-6 z-10 place-content-between">
+                        <div class="flex text-sm leading-6 text-white items-center gap-1">
+                                {{ heroicon('clock', 'h-4 w-4 inline') }}
+                                <strong class="font-semibold">Time travel:</strong>
+                                <span class="mr-4">
+                                playhead {{ aggregate.playhead }} from {{ count }}
+                            </span>
+                        </div>
+                        <div class="flex gap-2">
+                            {% if aggregate.playhead != 1 %}
+                                <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: until - 1 }) }}#{{ until - 1 }}"
+                                   class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
+                                    {{ heroicon('backward', 'h-4 w-4 inline') }}
+                                </a>
+                            {% endif %}
+
+                            <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab }) }}"
+                               class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
+                                {{ heroicon('stop', 'h-4 w-4 inline') }}
+                            </a>
+
+                            {% if aggregate.playhead < count %}
+                                <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: until + 1 }) }}#{{ until + 1 }}"
+                                   class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
+                                    {{ heroicon('forward', 'h-4 w-4 inline') }}
+                                </a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                {% endif %}
+
                 <div class="px-4 py-5 sm:p-6">
                     <div class="mb-8">
                         <nav class="flex space-x-4" aria-label="Tabs">
@@ -63,9 +87,9 @@
                             {{ _self.text('Playhead', aggregate.playhead) }}
 
                             {% if metadata.snapshot %}
-                            {{ _self.text('Snapshot Adapter', metadata.snapshot.store) }}
-                            {{ _self.text('Snapshot Version', metadata.snapshot.version) }}
-                            {{ _self.text('Snapshot Batch', metadata.snapshot.batch) }}
+                                {{ _self.text('Snapshot Adapter', metadata.snapshot.store) }}
+                                {{ _self.text('Snapshot Version', metadata.snapshot.version) }}
+                                {{ _self.text('Snapshot Batch', metadata.snapshot.batch) }}
                             {% endif %}
 
                         </dl>
@@ -80,8 +104,11 @@
                             <div class="rounded-md bg-red-50 p-4">
                                 <div class="flex">
                                     <div class="flex-shrink-0">
-                                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
+                                             aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                                                  clip-rule="evenodd" />
                                         </svg>
                                     </div>
                                     <div class="ml-3">
@@ -104,8 +131,11 @@
                             <div class="rounded-md bg-red-50 p-4">
                                 <div class="flex">
                                     <div class="flex-shrink-0">
-                                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
+                                             aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                                                  clip-rule="evenodd" />
                                         </svg>
                                     </div>
                                     <div class="ml-3">
@@ -130,6 +160,9 @@
                             {% for message in messages %}
                                 <li class="group/message relative {% if until and loop.index > until %}saturate-0{% endif %}">
                                     <span id="{{ loop.index }}" class="absolute -top-48"></span>
+                                    <div id="marker-{{ loop.index }}" class="absolute -left-10 z-20 invisible">
+                                        {{ heroicon('arrow-long-right', 'h-8 w-8 text-gray-500') }}
+                                    </div>
                                     <div class="relative pb-8">
                                         {% if loop.index != count %}
                                             <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
@@ -138,7 +171,7 @@
                                         <div class="relative flex space-x-3">
                                             <div>
                                 <span {% if eventsourcing_inspection_color(message.event) %}style="background: {{ eventsourcing_inspection_color(message.event) }};"{% endif %}
-                                      class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center {% if loop.index == until %}border-2 border-white ring-red-700 ring-4{% else %}ring-8 ring-white{% endif %}">
+                                      class="circle h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
                                     {{ heroicon(eventsourcing_inspection_icon(message.event, 'calendar'), 'h-5 w-5 text-white') }}
                                 </span>
                                             </div>
@@ -154,7 +187,7 @@
                                                         <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: message.playhead }) }}#{{ message.playhead }}"
                                                            class="text-gray-500 hover:text-gray-900 invisible group-hover/message:visible"
                                                         >
-                                                            {{ heroicon('backward', 'h-5 w-5 inline') }}
+                                                            {{ heroicon('play-pause', 'h-5 w-5 inline') }}
                                                         </a>
                                                     </p>
                                                     <dialog id="modal-{{ loop.index }}"
@@ -170,7 +203,7 @@
                                                         }) }}
                                                     </dialog>
                                                 </div>
-                                                <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                                <div class="whitespace-nowrap text-right text-xs text-gray-500">
                                                     {{ message.recordedOn|date('Y-m-d H:i:s') }}
                                                 </div>
                                             </div>
@@ -198,6 +231,12 @@
           });
         });
       });
+
+      if (window.location.hash) {
+        const item = document.getElementById(window.location.hash.replace('#', 'marker-'));
+        item.classList.add('visible');
+        item.classList.remove('invisible');
+      }
     </script>
 
 {% endblock %}

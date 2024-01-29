@@ -9,6 +9,7 @@ use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
 use Patchlevel\EventSourcing\Serializer\Encoder\JsonEncoder;
 use Patchlevel\EventSourcing\Serializer\EventSerializer;
+use Patchlevel\EventSourcingAdminBundle\TokenMapper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -22,6 +23,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
         private readonly AggregateRootRegistry $aggregateRootRegistry,
         private readonly EventRegistry $eventRegistry,
         private readonly EventSerializer $eventSerializer,
+        private readonly TokenMapper $tokenMapper,
     ) {
     }
 
@@ -34,6 +36,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
             new TwigFunction('eventsourcing_event_name', $this->eventName(...)),
             new TwigFunction('eventsourcing_event_payload', $this->eventPayload(...)),
             new TwigFunction('eventsourcing_short_id', $this->shortId(...)),
+            new TwigFunction('eventsourcing_profiler_token', $this->profilerToken(...)),
         ];
     }
 
@@ -69,5 +72,17 @@ final class EventSourcingAdminExtension extends AbstractExtension
             $message->event(),
             [JsonEncoder::OPTION_PRETTY_PRINT => true],
         )->payload;
+    }
+
+    public function profilerToken(Message $message): ?string
+    {
+        $headers = $message->customHeaders();
+        $requestId = $headers['requestId'] ?? null;
+
+        if (!$requestId) {
+            return null;
+        }
+
+        return $this->tokenMapper->get($requestId);
     }
 }
