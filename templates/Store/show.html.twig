@@ -99,7 +99,13 @@
                                         </a>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right">{{ message.playhead }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ eventsourcing_event_name(message) }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 group/parent">
+                                        {{ eventsourcing_event_name(message) }}
+                                        <a href="{{ path('patchlevel_event_sourcing_admin_event_index', { name: eventsourcing_event_name(message)}) }}#{{ eventsourcing_event_name(message) }}"
+                                           class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
+                                            {{ heroicon('calendar', 'h-5 w-5 inline') }}
+                                        </a>
+                                    </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ message.recordedOn|date('Y-m-d H:i:s') }}</td>
                                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-6">
                                         <a href="#" class="text-gray-500 hover:text-gray-900"

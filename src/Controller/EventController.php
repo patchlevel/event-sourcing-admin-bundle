@@ -36,7 +36,7 @@ final class EventController
                     static fn(ListenerDescriptor $listener) => $listener->name(),
                     $this->listenerProvider->listenersForEvent($eventClass),
                 ),
-                'projections' => $this->projectionMethods($eventClass),
+                'projectors' => $this->projectorsMethods($eventClass),
             ];
         }
 
@@ -45,7 +45,7 @@ final class EventController
         ]));
     }
 
-    private function projectionMethods(string $eventClass): array
+    private function projectorsMethods(string $eventClass): array
     {
         $result = [];
 
@@ -53,7 +53,7 @@ final class EventController
             $metadata = $this->projectorMetadataFactory->metadata($projector::class);
 
             if (array_key_exists($eventClass, $metadata->subscribeMethods)) {
-                $result = sprintf('%s::%s', $projector::class, $metadata->subscribeMethods[$eventClass]);
+                $result[] = sprintf('%s::%s', $projector::class, $metadata->subscribeMethods[$eventClass]);
             }
         }
 

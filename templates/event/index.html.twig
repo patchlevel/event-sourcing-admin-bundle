@@ -49,25 +49,43 @@
             </div>
 
 
-            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow ring-1 ring-black ring-opacity-5 w-2/3 sticky top-4">
+            <dl class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow ring-1 ring-black ring-opacity-5 w-2/3 sticky top-4">
                 <div class="text-sm text-gray-500">
-
                     {% for event in events %}
                         {% if event.name == app.request.get('name') %}
 
-                            <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibol">
-                                Listeners
+                            <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibold">
+                                Details
+                            </div>
+
+                            <dl class="divide-y divide-gray-100">
+                                {{ _self.text('Name', event.name) }}
+                                {{ _self.text('Class', _self.methodFormat(event.class)) }}
+                            </dl>
+
+                            <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibold">
+                                Listeners ({{ event.listeners|length }})
                             </div>
 
                             <ul>
                                 {% for listener in event.listeners %}
-                                    <li>{{ listener }}</li>
+                                    {{ _self.subscriber(listener) }}
+                                {% else %}
+                                    <li class="px-4 py-6">no listeners</li>
                                 {% endfor %}
                             </ul>
 
-                            <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibol">
-                                Projections
+                            <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibold">
+                                Projectors ({{ event.projectors|length }})
                             </div>
+
+                            <ul>
+                                {% for projector in event.projectors %}
+                                    {{ _self.subscriber(projector) }}
+                                {% else %}
+                                    <li class="px-4 py-6">no projectors</li>
+                                {% endfor %}
+                            </ul>
 
                         {% endif %}
                     {% endfor %}
@@ -83,21 +101,9 @@
 
                 </div>
             </div>
-
         </div>
-    </div>
 
     <script>
-      document.querySelectorAll("[data-modal]").forEach(function(button) {
-        button.addEventListener("click", function() {
-          var dialog = document.getElementById(button.dataset.modal);
-          dialog.showModal();
-          dialog.querySelector("button").addEventListener("click", function() {
-            dialog.close();
-          });
-        });
-      });
-
       if (window.location.hash) {
         const item = document.getElementById(window.location.hash.replace("#", ""));
 
@@ -109,7 +115,7 @@
 {% endblock %}
 
 {% macro text(name, content) %}
-    <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+    <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4">
         <dt class="text-sm font-medium leading-6 text-gray-900">{{ name }}</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
             {% if content == null %}
@@ -121,3 +127,17 @@
     </div>
 {% endmacro %}
 
+{% macro subscriber(name) %}
+    {% set parts = name|split('\\') %}
+
+    <li class="px-4 py-2 flex gap-1 flex-col">
+        <div class="text-gray-900 font-medium">{{ parts|last }}</div>
+        <div class="text-xs text-gray-500">{{ name }}</div>
+    </li>
+{% endmacro %}
+
+{% macro methodFormat(name) %}
+    {% set parts = name|split('\\') %}
+    <span class="text-gray-400">{{ parts|slice(0, parts|length - 1)|join('\\') }}\</span><span
+        class="text-gray-500 font-semibold">{{ parts|last }}</span>
+{% endmacro %}
