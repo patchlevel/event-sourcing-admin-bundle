@@ -30,16 +30,36 @@ final class InspectionExtension extends AbstractExtension
     {
         return [
             new TwigFunction('eventsourcing_inspection_icon', $this->icon(...)),
-            new TwigFunction('eventsourcing_inspection_description', $this->description(...), ['is_safe' => ['html']]),
             new TwigFunction('eventsourcing_inspection_color', $this->color(...)),
+            new TwigFunction('eventsourcing_inspection_description', $this->description(...), ['is_safe' => ['html']]),
+            new TwigFunction('eventsourcing_inspection_description_raw', $this->descriptionRaw(...)),
         ];
     }
 
-    private function icon(object $event, string|null $default = null): string|null
+    /**
+     * @param class-string|object $event
+     */
+    private function icon(object|string $event, string|null $default = null): string|null
     {
         $inspect = $this->inspect($event);
 
         return $inspect->icon ?: $default;
+    }
+
+    /**
+     * @param class-string|object $event
+     */
+    private function color(object|string $event, string|Color|null $default = null): string|null
+    {
+        $inspect = $this->inspect($event);
+
+        $result = $inspect->color ?: $default;
+
+        if ($result instanceof Color) {
+            return $result->value;
+        }
+
+        return $result;
     }
 
     private function description(object $event, string|null $default = null): string|null
@@ -71,23 +91,27 @@ final class InspectionExtension extends AbstractExtension
         );
     }
 
-    private function color(object $event, string|Color|null $default = null): string|null
+    /**
+     * @param class-string|object $event
+     */
+    private function descriptionRaw(object|string $event, string|null $default = null): string|null
     {
         $inspect = $this->inspect($event);
 
-        $result = $inspect->color ?: $default;
-
-        if ($result instanceof Color) {
-            return $result->value;
-        }
-
-        return $result;
+        return $inspect->description ?: $default;
     }
 
-    private function inspect(object $event): Inspect
+    /**
+     * @param class-string|object $event
+     */
+    private function inspect(object|string $event): Inspect
     {
-        if (isset($this->cache[$event::class])) {
-            return $this->cache[$event::class];
+        if (is_object($event)) {
+            $event = $event::class;
+        }
+
+        if (isset($this->cache[$event])) {
+            return $this->cache[$event];
         }
 
         $reflection = new ReflectionClass($event);
@@ -97,8 +121,8 @@ final class InspectionExtension extends AbstractExtension
             return new Inspect();
         }
 
-        $this->cache[$event::class] = $attributes[0]->newInstance();
+        $this->cache[$event] = $attributes[0]->newInstance();
 
-        return $this->cache[$event::class];
+        return $this->cache[$event];
     }
 }

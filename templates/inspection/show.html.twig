@@ -23,7 +23,7 @@
 
 
         <div class="flex mt-8 gap-4 items-start">
-            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow w-1/2 sticky top-4">
+            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow ring-1 ring-black ring-opacity-5 w-1/2 sticky top-4">
 
                 {% if until %}
                     <div class="flex bg-indigo-600 p-6 z-10 place-content-between">
@@ -38,19 +38,19 @@
                             {% if aggregate.playhead != 1 %}
                                 <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: until - 1 }) }}#{{ until - 1 }}"
                                    class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
-                                    {{ heroicon('backward', 'h-4 w-4 inline') }}
+                                    {{ heroicon('backward', '-ml-0.5 h-5 w-5') }}
                                 </a>
                             {% endif %}
 
                             <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab }) }}"
                                class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
-                                {{ heroicon('stop', 'h-4 w-4 inline') }}
+                                {{ heroicon('stop', '-ml-0.5 h-5 w-5') }}
                             </a>
 
                             {% if aggregate.playhead < count %}
                                 <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateId: aggregateId, aggregateName: aggregateName, tab: tab, until: until + 1 }) }}#{{ until + 1 }}"
                                    class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20">
-                                    {{ heroicon('forward', 'h-4 w-4 inline') }}
+                                    {{ heroicon('forward', '-ml-0.5 h-5 w-5') }}
                                 </a>
                             {% endif %}
 
@@ -153,7 +153,7 @@
             </div>
 
 
-            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow w-1/2">
+            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow ring-1 ring-black ring-opacity-5 w-1/2">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flow-root">
                         <ul role="list" class="-mb-8">

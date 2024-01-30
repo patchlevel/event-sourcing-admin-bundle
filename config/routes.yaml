@@ -25,3 +25,7 @@ patchlevel_event_sourcing_admin_inspection_index:
 patchlevel_event_sourcing_admin_inspection_show:
   path: /inspection/{aggregateName}/{aggregateId}
   controller: Patchlevel\EventSourcingAdminBundle\Controller\InspectionController::showAction
+
+patchlevel_event_sourcing_admin_event_index:
+  path: /event
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\EventController::indexAction

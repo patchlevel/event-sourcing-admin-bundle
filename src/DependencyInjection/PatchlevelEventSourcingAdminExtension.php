@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\DependencyInjection;
 
+use Patchlevel\EventSourcing\EventBus\ListenerProvider;
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootMetadataFactory;
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
+use Patchlevel\EventSourcing\Metadata\Projector\ProjectorMetadataFactory;
 use Patchlevel\EventSourcing\Projection\Projectionist\Projectionist;
+use Patchlevel\EventSourcing\Projection\Projector\ProjectorRepository;
 use Patchlevel\EventSourcing\Serializer\EventSerializer;
 use Patchlevel\EventSourcing\Snapshot\SnapshotStore;
 use Patchlevel\EventSourcing\Store\Store;
 use Patchlevel\EventSourcingAdminBundle\Controller\DefaultController;
+use Patchlevel\EventSourcingAdminBundle\Controller\EventController;
 use Patchlevel\EventSourcingAdminBundle\Controller\InspectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\StoreController;
@@ -82,6 +86,16 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
                 new Reference(Projectionist::class),
                 new Reference(Store::class),
                 new Reference(RouterInterface::class),
+            ])
+            ->addTag('controller.service_arguments');
+
+        $container->register(EventController::class)
+            ->setArguments([
+                new Reference('twig'),
+                new Reference(EventRegistry::class),
+                new Reference(ListenerProvider::class),
+                new Reference(ProjectorRepository::class),
+                new Reference(ProjectorMetadataFactory::class),
             ])
             ->addTag('controller.service_arguments');
 
