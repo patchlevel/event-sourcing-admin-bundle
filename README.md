@@ -39,6 +39,6 @@ patchlevel_event_sourcing_admin:
 ```yaml
 # config/routes/patchlevel_event_sourcing_admin.yaml
 event_sourcing:
-  resource: '@PatchlevelEventSourcingAdminBundle/Controller/'
+  resource: '@PatchlevelEventSourcingAdminBundle/config/routes.yaml'
   prefix: /es-admin
 ```
