@@ -16,6 +16,10 @@ This bundle provides a simple admin interface for the [patchlevel/event-sourcing
 
 ![Screenshot3](docs/screenshot3.png)
 
+### Events
+
+![Screenshot4](docs/screenshot4.png)
+
 ## Installation
 
 ```bash
