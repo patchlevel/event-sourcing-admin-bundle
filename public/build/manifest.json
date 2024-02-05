@@ -1,7 +1,6 @@
 {
-  "build/app.css": "/build/app.css",
-  "build/app.js": "/build/app.js",
-  "build/vendors-node_modules_symfony_webpack-encore_lib_webpack_copy-files-loader_js_context_Users_da-5d95d7.js": "/build/vendors-node_modules_symfony_webpack-encore_lib_webpack_copy-files-loader_js_context_Users_da-5d95d7.js",
+  "build/app.css": "/build/app.922da750.css",
+  "build/app.js": "/build/app.31d6cfe0.js",
   "build/icons/film.svg": "/build/icons/film.svg",
   "build/icons/table-cells.svg": "/build/icons/table-cells.svg",
   "build/icons/cog-8-tooth.svg": "/build/icons/cog-8-tooth.svg",
