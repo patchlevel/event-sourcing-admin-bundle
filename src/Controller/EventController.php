@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
+use Patchlevel\EventSourcing\Attribute\Subscribe;
 use Patchlevel\EventSourcing\EventBus\ListenerDescriptor;
 use Patchlevel\EventSourcing\EventBus\ListenerProvider;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
@@ -55,7 +56,15 @@ final class EventController
             $metadata = $this->projectorMetadataFactory->metadata($projector::class);
 
             if (array_key_exists($eventClass, $metadata->subscribeMethods)) {
-                $result[] = sprintf('%s::%s', $projector::class, $metadata->subscribeMethods[$eventClass]);
+                foreach ($metadata->subscribeMethods[$eventClass] as $method) {
+                    $result[] = sprintf('%s::%s', $projector::class, $method);
+                }
+            }
+
+            if (array_key_exists(Subscribe::ALL, $metadata->subscribeMethods)) {
+                foreach ($metadata->subscribeMethods[Subscribe::ALL] as $method) {
+                    $result[] = sprintf('%s::%s', $projector::class, $method);
+                }
             }
         }
 

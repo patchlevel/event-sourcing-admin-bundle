@@ -81,19 +81,19 @@
                                 <tr class="group/row">
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 text-right">{{ messages.index }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 group/parent">
-                                        {{ eventsourcing_aggregate_name(message) }}
-                                        <a href="{{ path('patchlevel_event_sourcing_admin_store_show', { aggregate: eventsourcing_aggregate_name(message) }) }}"
+                                        {{ message.aggregateName }}
+                                        <a href="{{ path('patchlevel_event_sourcing_admin_store_show', { aggregate: message.aggregateName }) }}"
                                            class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
                                             {{ heroicon('funnel', 'h-5 w-5 inline') }}
                                         </a>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 group/parent" title="{{ message.aggregateId }}">
                                         {{ eventsourcing_short_id(message.aggregateId) }}
-                                        <a href="{{ path('patchlevel_event_sourcing_admin_store_show', { aggregate: eventsourcing_aggregate_name(message), aggregateId: message.aggregateId }) }}"
+                                        <a href="{{ path('patchlevel_event_sourcing_admin_store_show', { aggregate: message.aggregateName, aggregateId: message.aggregateId }) }}"
                                            class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
                                             {{ heroicon('funnel', 'h-5 w-5 inline') }}
                                         </a>
-                                        <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateName: eventsourcing_aggregate_name(message), aggregateId: message.aggregateId }) }}#{{ message.playhead }}"
+                                        <a href="{{ path('patchlevel_event_sourcing_admin_inspection_show', { aggregateName: message.aggregateName, aggregateId: message.aggregateId }) }}#{{ message.playhead }}"
                                            class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
                                             {{ heroicon('identification', 'h-5 w-5 inline') }}
                                         </a>
@@ -125,6 +125,10 @@
                                             }) }}
                                         </dialog>
                                     </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-sm text-gray-500">No events found</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

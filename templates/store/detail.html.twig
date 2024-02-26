@@ -1,12 +1,12 @@
 <dl class="divide-y divide-gray-100">
-    {{ _self.text('Aggregate', eventsourcing_aggregate_name(message)) }}
-    {{ _self.text('Aggregate Class', message.aggregateClass) }}
+    {{ _self.text('Aggregate', message.aggregateName) }}
+    {{ _self.text('Aggregate Class', eventsourcing_aggregate_class(message)) }}
 
     <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 group/parent">
         <dt class="text-sm font-medium leading-6 text-gray-900">Aggregate Id</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
             {{ message.aggregateId }}
-            <a class="group-hover/parent:visible invisible" href="{{ path('patchlevel_event_sourcing_admin_inspection_show', {aggregateName: eventsourcing_aggregate_name(message), aggregateId: message.aggregateId}) }}">
+            <a class="group-hover/parent:visible invisible" href="{{ path('patchlevel_event_sourcing_admin_inspection_show', {aggregateName: message.aggregateName, aggregateId: message.aggregateId}) }}">
                 {{ heroicon('identification', 'h-5 w-5 -mt-1 text-gray-400 inline') }}
             </a>
         </dd>

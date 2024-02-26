@@ -1,7 +1,7 @@
 <dl class="divide-y divide-gray-100">
-    {{ _self.text('ID', projection.id.toString) }}
-    {{ _self.text('Name', projection.id.name) }}
-    {{ _self.text('Version', projection.id.version) }}
+    {{ _self.text('ID', projection.id) }}
+    {{ _self.text('Group', projection.group) }}
+    {{ _self.text('Run mode', projection.runMode.value) }}
     {# { _self.text('Class', 'unknown') } #}
     {{ _self.text('Position', projection.position) }}
     {{ _self.text('Status', projection.status.value) }}

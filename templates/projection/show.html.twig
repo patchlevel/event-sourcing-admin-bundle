@@ -16,15 +16,15 @@
                             <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col"
-                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ">
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     ID
                                 </th>
                                 <th scope="col"
-                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ">
-                                    Name
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Group
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
-                                    Version
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Run mode
                                 </th>
                                 <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
                                     Position
@@ -36,16 +36,16 @@
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                            {% for projection in projections|sort((a, b) => a.id.version <=> b.id.version)|sort((a, b) => a.id.name <=> b.id.name) %}
+                            {% for projection in projections|sort((a, b) => a.id <=> b.id) %}
                                 <tr class="group/row">
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ projection.id.toString }}
+                                        {{ projection.id }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ projection.id.name }}
+                                        {{ projection.group }}
                                     </td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right">
-                                        {{ projection.id.version }}
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ projection.runMode.value }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right">
                                         {{ projection.position }}

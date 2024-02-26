@@ -1,4 +1,4 @@
-{% set total = (count / limit)|round(0, 'ceil') %}
+{% set total = count == 0 ? 1 : (count / limit)|round(0, 'ceil') %}
 {% set between = 2 %}
 
 <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">

@@ -31,7 +31,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('eventsourcing_aggregate_name', $this->aggregateName(...)),
+            new TwigFunction('eventsourcing_aggregate_class', $this->aggregateClass(...)),
             new TwigFunction('eventsourcing_event_class', $this->eventClass(...)),
             new TwigFunction('eventsourcing_event_name', $this->eventName(...)),
             new TwigFunction('eventsourcing_event_payload', $this->eventPayload(...)),
@@ -48,9 +48,9 @@ final class EventSourcingAdminExtension extends AbstractExtension
     }
 
     /** @return class-string */
-    public function aggregateName(Message $message): string
+    public function aggregateClass(Message $message): string
     {
-        return $this->aggregateRootRegistry->aggregateName($message->aggregateClass());
+        return $this->aggregateRootRegistry->aggregateClass($message->aggregateName());
     }
 
     /** @return class-string */
