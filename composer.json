@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-    "patchlevel/event-sourcing-bundle": "3.0.0-rc5",
+    "patchlevel/event-sourcing-bundle": "^3.0.0-rc6",
     "symfony/asset": "^7.0",
     "symfony/asset-mapper": "^7.0",
     "symfony/config": "^5.4.31|^6.4.0|^7.0.0",
