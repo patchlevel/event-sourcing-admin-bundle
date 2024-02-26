@@ -8,17 +8,19 @@ use Patchlevel\EventSourcing\EventBus\ListenerDescriptor;
 use Patchlevel\EventSourcing\EventBus\ListenerProvider;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
 use Patchlevel\EventSourcing\Metadata\Projector\ProjectorMetadataFactory;
-use Patchlevel\EventSourcing\Projection\Projector\ProjectorRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 final class EventController
 {
+    /**
+     * @param iterable<object> $projectors
+     */
     public function __construct(
         private readonly Environment              $twig,
         private readonly EventRegistry            $eventRegistry,
         private readonly ListenerProvider         $listenerProvider,
-        private readonly ProjectorRepository      $projectorRepository,
+        private readonly iterable                 $projectors,
         private readonly ProjectorMetadataFactory $projectorMetadataFactory,
     )
     {
@@ -49,7 +51,7 @@ final class EventController
     {
         $result = [];
 
-        foreach ($this->projectorRepository->projectors() as $projector) {
+        foreach ($this->projectors as $projector) {
             $metadata = $this->projectorMetadataFactory->metadata($projector::class);
 
             if (array_key_exists($eventClass, $metadata->subscribeMethods)) {

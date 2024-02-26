@@ -10,7 +10,6 @@ use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
 use Patchlevel\EventSourcing\Metadata\Projector\ProjectorMetadataFactory;
 use Patchlevel\EventSourcing\Projection\Projectionist\Projectionist;
-use Patchlevel\EventSourcing\Projection\Projector\ProjectorRepository;
 use Patchlevel\EventSourcing\Serializer\EventSerializer;
 use Patchlevel\EventSourcing\Snapshot\SnapshotStore;
 use Patchlevel\EventSourcing\Store\Store;
@@ -27,6 +26,8 @@ use Patchlevel\EventSourcingAdminBundle\Twig\EventSourcingAdminExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\HeroiconsExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\InspectionExtension;
 use Patchlevel\Hydrator\Hydrator;
+use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
+use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
@@ -55,7 +56,6 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
 
         $container->register(DefaultController::class)
             ->setArguments([
-                new Reference('twig'),
                 new Reference(RouterInterface::class),
             ])
             ->addTag('controller.service_arguments');
@@ -94,7 +94,7 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
                 new Reference('twig'),
                 new Reference(EventRegistry::class),
                 new Reference(ListenerProvider::class),
-                new Reference(ProjectorRepository::class),
+                new TaggedIteratorArgument('event_sourcing.projector'),
                 new Reference(ProjectorMetadataFactory::class),
             ])
             ->addTag('controller.service_arguments');

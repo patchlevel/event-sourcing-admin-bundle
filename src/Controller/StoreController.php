@@ -53,8 +53,8 @@ final class StoreController
         $aggregateId = $request->query->get('aggregateId');
 
         return new Criteria(
-            aggregateClass: $aggregateName ? $this->aggregateRootRegistry->aggregateClass($aggregateName) : null,
-            aggregateId: $aggregateId ?: null,
+            aggregateName: $aggregateName,
+            aggregateId: $aggregateId,
         );
     }
 }

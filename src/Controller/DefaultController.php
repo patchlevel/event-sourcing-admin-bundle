@@ -7,12 +7,10 @@ namespace Patchlevel\EventSourcingAdminBundle\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Twig\Environment;
 
 final class DefaultController
 {
     public function __construct(
-        private readonly Environment $twig,
         private readonly RouterInterface $router,
     ) {
     }

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
-use Patchlevel\EventSourcing\Projection\Projection\ProjectionCriteria;
-use Patchlevel\EventSourcing\Projection\Projection\ProjectionId;
 use Patchlevel\EventSourcing\Projection\Projectionist\Projectionist;
+use Patchlevel\EventSourcing\Projection\Projectionist\ProjectionistCriteria;
 use Patchlevel\EventSourcing\Store\Store;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,9 +37,7 @@ final class ProjectionController
 
     public function rebuildAction(string $id): Response
     {
-        $criteria = new ProjectionCriteria([
-            ProjectionId::fromString($id),
-        ]);
+        $criteria = new ProjectionistCriteria([$id]);
 
         $this->projectionist->remove($criteria);
         $this->projectionist->boot($criteria);

@@ -78,10 +78,10 @@ final class InspectionController
         $tab = $request->query->get('tab', 'details');
 
         $aggregateClass = $this->aggregateRootRegistry->aggregateClass($aggregateName);
-        $aggregate = $this->aggregate($aggregateClass, $aggregateId, $until);
+        $aggregate = $this->aggregate($aggregateName, $aggregateId, $until);
 
         $criteria = new Criteria(
-            aggregateClass: $this->aggregateRootRegistry->aggregateClass($aggregateName),
+            aggregateName: $aggregateName,
             aggregateId: $aggregateId,
         );
 
@@ -134,11 +134,10 @@ final class InspectionController
         );
     }
 
-    /** @param class-string<AggregateRoot> $aggregateClass */
-    private function aggregate(string $aggregateClass, string $aggregateId, int|null $until = null): AggregateRoot
+    private function aggregate(string $aggregateName, string $aggregateId, int|null $until = null): AggregateRoot
     {
         $criteria = new Criteria(
-            aggregateClass: $aggregateClass,
+            aggregateName: $aggregateName,
             aggregateId: $aggregateId,
         );
 
@@ -151,9 +150,11 @@ final class InspectionController
 
             if ($firstMessage === null) {
                 throw new NotFoundHttpException(
-                    sprintf('Aggregate "%s" with the id "%s" not found', $aggregateClass, $aggregateId),
+                    sprintf('Aggregate "%s" with the id "%s" not found', $aggregateName, $aggregateId),
                 );
             }
+
+            $aggregateClass = $this->aggregateRootRegistry->aggregateClass($aggregateName);
 
             return $aggregateClass::createFromEvents(
                 $this->unpack($stream, $until),

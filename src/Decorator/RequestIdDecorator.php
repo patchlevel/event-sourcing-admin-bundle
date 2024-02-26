@@ -2,7 +2,7 @@
 
 namespace Patchlevel\EventSourcingAdminBundle\Decorator;
 
-use Patchlevel\EventSourcing\EventBus\Decorator\MessageDecorator;
+use Patchlevel\EventSourcing\Repository\MessageDecorator\MessageDecorator;
 use Patchlevel\EventSourcing\EventBus\Message;
 use Patchlevel\EventSourcingAdminBundle\Listener\RequestIdListener;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -29,6 +29,6 @@ class RequestIdDecorator implements MessageDecorator
             return $message;
         }
 
-        return $message->withCustomHeader('requestId', $requestId);
+        return $message->withHeader('requestId', $requestId);
     }
 }
