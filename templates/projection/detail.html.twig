@@ -1,32 +1,45 @@
 <dl class="divide-y divide-gray-100">
     {{ _self.text('ID', projection.id) }}
     {{ _self.text('Group', projection.group) }}
-    {{ _self.text('Run mode', projection.runMode.value) }}
+    {{ _self.text('Run mode', projection.runMode.value|replace({'_': ' '})) }}
     {# { _self.text('Class', 'unknown') } #}
     {{ _self.text('Position', projection.position) }}
     {{ _self.text('Status', projection.status.value) }}
 
-    {{ dump(projection) }}
+    {{ _self.text('Retry attempt', projection.retryAttempt) }}
+
+    {{ _self.text('Updated at', projection.lastSavedAt|date('Y-m-d H:i:s')) }}
 
     {% if projection.projectionError %}
         {% if projection.projectionError.errorContext %}
             {% for context in projection.projectionError.errorContext %}
-                <div class="rounded-md bg-gray-50 p-4">
-                    <div class="flex">
+                <div class="rounded-md bg-gray-50 overflow-hidden">
+                    <div class="flex bg-red-600 p-4">
                         <div class="flex-shrink-0">
-                            {{ heroicon('exclamation-circle', class='h-5 w-5 text-red-800') }}
+                            {{ heroicon('exclamation-circle', class='h-5 w-5 text-white') }}
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-red-800">{{ context.message }}</h3>
+                            <h3 class="text-sm font-medium text-white">{{ context.message }}</h3>
                         </div>
                     </div>
 
-                    {% for step in context.trace %}
-                        <div><span title="{{ step.class }}">{{~ _self.shortClass(step.class) ~}}</span>{{ step.type }}{{ step.function }}({{ _self.args(step.args) }})</div>
-                        <div>in {{ step.file }} (line {{ step.line }})</div>
+                    <div class="rounded-md bg-gray-50 p-4">
+                        {% for step in context.trace %}
+                            <div class="py-2">
+                                {% if step.class is defined %}
+                                    <div class="text-gray-900" title="{{ step.class }}">
+                                        {{~ step.class|split('\\')|last ~}}{{~ step.type ~}}{{~ step.function ~}}(...)
+                                    </div>
+                                {% else %}
+                                    <div class="text-gray-900">
+                                        <span title="{{ step.function }}">{{ step.function }}(...)</span>
+                                    </div>
+                                {% endif %}
+                                <div class="text-xs text-gray-500">in {{ step.file }} (line {{ step.line }})</div>
+                            </div>
+                        {% endfor %}
 
-                        {{ dump(step) }}
-                    {% endfor %}
+                    </div>
                 </div>
 
 
@@ -69,6 +82,3 @@
     {{ args|join(', ') }}
 {% endmacro %}
 
-{% macro shortClass(class) ~%}
-    {{~ class|split('\\')|last ~}}
-{%~ endmacro %}

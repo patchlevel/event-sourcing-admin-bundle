@@ -15,8 +15,20 @@ patchlevel_event_sourcing_admin_projection_show:
   controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::showAction
 
 patchlevel_eventsourcingadmin_projection_rebuild:
-  path: /projection/rebuild
+  path: /projection/{id}/rebuild
   controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::rebuildAction
+
+patchlevel_eventsourcingadmin_projection_pause:
+  path: /projection/{id}/pause
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::pauseAction
+
+patchlevel_eventsourcingadmin_projection_reactivate:
+  path: /projection/{id}/reactivate
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::reactivateAction
+
+patchlevel_eventsourcingadmin_projection_remove:
+  path: /projection/{id}/remove
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::removeAction
 
 patchlevel_event_sourcing_admin_inspection_index:
   path: /inspection

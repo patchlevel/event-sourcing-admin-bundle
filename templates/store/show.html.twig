@@ -97,6 +97,10 @@
                                            class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
                                             {{ heroicon('identification', 'h-5 w-5 inline') }}
                                         </a>
+                                        <a href="#" data-clipboard="{{ message.aggregateId }}"
+                                           class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
+                                            {{ heroicon('clipboard', 'h-5 w-5 inline') }}
+                                        </a>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right">{{ message.playhead }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 group/parent">
@@ -153,6 +157,13 @@
           dialog.querySelector("button").addEventListener("click", function() {
             dialog.close();
           });
+        });
+      });
+
+      document.querySelectorAll("[data-clipboard]").forEach(function(button) {
+        button.addEventListener("click", function(event) {
+          event.preventDefault();
+          navigator.clipboard.writeText(button.dataset.clipboard);
         });
       });
     </script>
