@@ -3,7 +3,7 @@
 namespace Patchlevel\EventSourcingAdminBundle\Decorator;
 
 use Patchlevel\EventSourcing\Repository\MessageDecorator\MessageDecorator;
-use Patchlevel\EventSourcing\EventBus\Message;
+use Patchlevel\EventSourcing\Message\Message;
 use Patchlevel\EventSourcingAdminBundle\Listener\RequestIdListener;
 use Symfony\Component\HttpFoundation\RequestStack;
 

@@ -41,3 +41,7 @@ patchlevel_event_sourcing_admin_inspection_show:
 patchlevel_event_sourcing_admin_event_index:
   path: /event
   controller: Patchlevel\EventSourcingAdminBundle\Controller\EventController::indexAction
+
+patchlevel_event_sourcing_admin_graph_index:
+  path: /graph
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\GraphController::indexAction

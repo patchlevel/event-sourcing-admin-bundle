@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
-use Patchlevel\EventSourcing\Projection\Projection\ProjectionStatus;
-use Patchlevel\EventSourcing\Projection\Projection\RunMode;
-use Patchlevel\EventSourcing\Projection\Projectionist\Projectionist;
-use Patchlevel\EventSourcing\Projection\Projectionist\ProjectionistCriteria;
+use Patchlevel\EventSourcing\Subscription\Status;
+use Patchlevel\EventSourcing\Subscription\RunMode;
+use Patchlevel\EventSourcing\Subscription\Engine\SubscriptionEngine;
+use Patchlevel\EventSourcing\Subscription\Engine\SubscriptionEngineCriteria;
 use Patchlevel\EventSourcing\Store\Store;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ final class ProjectionController
 {
     public function __construct(
         private readonly Environment $twig,
-        private readonly Projectionist $projectionist,
+        private readonly SubscriptionEngine $engine,
         private readonly Store $store,
         private readonly RouterInterface $router,
     ) {
@@ -27,13 +27,13 @@ final class ProjectionController
 
     public function showAction(Request $request): Response
     {
-        $projections = $this->projectionist->projections();
+        $subscriptions = $this->engine->subscriptions();
         $messageCount = $this->store->count();
 
         $groups = [];
 
-        foreach ($projections as $projection) {
-            $groups[$projection->group()] = true;
+        foreach ($subscriptions as $subscription) {
+            $groups[$subscription->group()] = true;
         }
 
         $filteredProjections = [];
@@ -43,31 +43,31 @@ final class ProjectionController
         $status = $request->get('status');
 
 
-        foreach ($projections as $projection) {
-            if ($search && !str_contains($projection->id(), $search)) {
+        foreach ($subscriptions as $subscription) {
+            if ($search && !str_contains($subscription->id(), $search)) {
                 continue;
             }
 
-            if ($group && $projection->group() !== $group) {
+            if ($group && $subscription->group() !== $group) {
                 continue;
             }
 
-            if ($mode && $projection->runMode()->value !== $mode) {
+            if ($mode && $subscription->runMode()->value !== $mode) {
                 continue;
             }
 
-            if ($status && $projection->status()->value !== $status) {
+            if ($status && $subscription->status()->value !== $status) {
                 continue;
             }
 
-            $filteredProjections[] = $projection;
+            $filteredProjections[] = $subscription;
         }
 
         return new Response(
             $this->twig->render('@PatchlevelEventSourcingAdmin/projection/show.html.twig', [
                 'projections' => $filteredProjections,
                 'messageCount' => $messageCount,
-                'statuses' => array_map(fn (ProjectionStatus $status) => $status->value, ProjectionStatus::cases()),
+                'statuses' => array_map(fn (Status $status) => $status->value, Status::cases()),
                 'modes' => array_map(fn (RunMode $mode) => $mode->value, RunMode::cases()),
                 'groups' => array_keys($groups),
             ]),
@@ -76,10 +76,10 @@ final class ProjectionController
 
     public function rebuildAction(string $id): Response
     {
-        $criteria = new ProjectionistCriteria([$id]);
+        $criteria = new SubscriptionEngineCriteria([$id]);
 
-        $this->projectionist->remove($criteria);
-        $this->projectionist->boot($criteria);
+        $this->engine->remove($criteria);
+        $this->engine->boot($criteria);
 
         return new RedirectResponse(
             $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
@@ -88,9 +88,9 @@ final class ProjectionController
 
     public function pauseAction(string $id): Response
     {
-        $criteria = new ProjectionistCriteria([$id]);
+        $criteria = new SubscriptionEngineCriteria([$id]);
 
-        $this->projectionist->pause($criteria);
+        $this->engine->pause($criteria);
 
         return new RedirectResponse(
             $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
@@ -99,9 +99,9 @@ final class ProjectionController
 
     public function bootAction(string $id): Response
     {
-        $criteria = new ProjectionistCriteria([$id]);
+        $criteria = new SubscriptionEngineCriteria([$id]);
 
-        $this->projectionist->boot($criteria);
+        $this->engine->boot($criteria);
 
         return new RedirectResponse(
             $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
@@ -110,9 +110,9 @@ final class ProjectionController
 
     public function reactivateAction(string $id): Response
     {
-        $criteria = new ProjectionistCriteria([$id]);
+        $criteria = new SubscriptionEngineCriteria([$id]);
 
-        $this->projectionist->reactivate($criteria);
+        $this->engine->reactivate($criteria);
 
         return new RedirectResponse(
             $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
@@ -121,9 +121,9 @@ final class ProjectionController
 
     public function removeAction(string $id): Response
     {
-        $criteria = new ProjectionistCriteria([$id]);
+        $criteria = new SubscriptionEngineCriteria([$id]);
 
-        $this->projectionist->remove($criteria);
+        $this->engine->remove($criteria);
 
         return new RedirectResponse(
             $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),

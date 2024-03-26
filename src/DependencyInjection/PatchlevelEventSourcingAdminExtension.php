@@ -8,27 +8,29 @@ use Patchlevel\EventSourcing\EventBus\ListenerProvider;
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootMetadataFactory;
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
-use Patchlevel\EventSourcing\Metadata\Projector\ProjectorMetadataFactory;
-use Patchlevel\EventSourcing\Projection\Projectionist\Projectionist;
+use Patchlevel\EventSourcing\Metadata\Subscriber\SubscriberMetadataFactory;
 use Patchlevel\EventSourcing\Serializer\EventSerializer;
 use Patchlevel\EventSourcing\Snapshot\SnapshotStore;
 use Patchlevel\EventSourcing\Store\Store;
+use Patchlevel\EventSourcing\Subscription\Engine\SubscriptionEngine;
 use Patchlevel\EventSourcingAdminBundle\Controller\DefaultController;
 use Patchlevel\EventSourcingAdminBundle\Controller\EventController;
+use Patchlevel\EventSourcingAdminBundle\Controller\GraphController;
 use Patchlevel\EventSourcingAdminBundle\Controller\InspectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\StoreController;
 use Patchlevel\EventSourcingAdminBundle\Decorator\RequestIdDecorator;
 use Patchlevel\EventSourcingAdminBundle\Listener\RequestIdListener;
 use Patchlevel\EventSourcingAdminBundle\Listener\TokenMapperListener;
+use Patchlevel\EventSourcingAdminBundle\Projection\TraceProjector;
 use Patchlevel\EventSourcingAdminBundle\TokenMapper;
 use Patchlevel\EventSourcingAdminBundle\Twig\EventSourcingAdminExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\HeroiconsExtension;
 use Patchlevel\EventSourcingAdminBundle\Twig\InspectionExtension;
 use Patchlevel\Hydrator\Hydrator;
-use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
 use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -83,7 +85,7 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
         $container->register(ProjectionController::class)
             ->setArguments([
                 new Reference('twig'),
-                new Reference(Projectionist::class),
+                new Reference(SubscriptionEngine::class),
                 new Reference(Store::class),
                 new Reference(RouterInterface::class),
             ])
@@ -95,7 +97,8 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
                 new Reference(EventRegistry::class),
                 new Reference(ListenerProvider::class),
                 new TaggedIteratorArgument('event_sourcing.projector'),
-                new Reference(ProjectorMetadataFactory::class),
+                new Reference(SubscriberMetadataFactory::class),
+                new Reference(TraceProjector::class, ContainerInterface::NULL_ON_INVALID_REFERENCE),
             ])
             ->addTag('controller.service_arguments');
 
@@ -146,5 +149,12 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
                 'method' => '__invoke',
                 'priority' => -200,
             ]);
+
+        $container->register(TraceProjector::class)
+            ->setArguments([
+                new Reference('doctrine.dbal.projection_connection'),
+                new Reference(EventRegistry::class),
+            ])
+            ->addTag('event_sourcing.projector');
     }
 }
