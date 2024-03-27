@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
+use Patchlevel\EventSourcing\Aggregate\AggregateHeader;
 use Patchlevel\EventSourcing\Aggregate\AggregateRoot;
 use Patchlevel\EventSourcing\Aggregate\CustomId;
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootMetadataFactory;
@@ -158,7 +159,7 @@ final class InspectionController
 
             return $aggregateClass::createFromEvents(
                 $this->unpack($stream, $until),
-                $firstMessage->playhead() - 1,
+                $firstMessage->header(AggregateHeader::class)->playhead - 1,
             );
         } finally {
             $stream?->close();
@@ -169,7 +170,7 @@ final class InspectionController
     private function unpack(Stream $stream, int|null $until = null): Traversable
     {
         foreach ($stream as $message) {
-            if ($until !== null && $message->playhead() > $until) {
+            if ($until !== null && $message->header(AggregateHeader::class)->playhead > $until) {
                 break;
             }
 

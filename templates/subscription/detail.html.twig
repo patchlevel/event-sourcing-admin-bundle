@@ -1,18 +1,18 @@
 <dl class="divide-y divide-gray-100">
-    {{ _self.text('ID', projection.id) }}
-    {{ _self.text('Group', projection.group) }}
-    {{ _self.text('Run mode', projection.runMode.value|replace({'_': ' '})) }}
+    {{ _self.text('ID', subscription.id) }}
+    {{ _self.text('Group', subscription.group) }}
+    {{ _self.text('Run mode', subscription.runMode.value|replace({'_': ' '})) }}
     {# { _self.text('Class', 'unknown') } #}
-    {{ _self.text('Position', projection.position) }}
-    {{ _self.text('Status', projection.status.value) }}
+    {{ _self.text('Position', subscription.position) }}
+    {{ _self.text('Status', subscription.status.value) }}
 
-    {{ _self.text('Retry attempt', projection.retryAttempt) }}
+    {{ _self.text('Retry attempt', subscription.retryAttempt) }}
 
-    {{ _self.text('Updated at', projection.lastSavedAt|date('Y-m-d H:i:s')) }}
+    {{ _self.text('Updated at', subscription.lastSavedAt|date('Y-m-d H:i:s')) }}
 
-    {% if projection.projectionError %}
-        {% if projection.projectionError.errorContext %}
-            {% for context in projection.projectionError.errorContext %}
+    {% if subscription.subscriptionError %}
+        {% if subscription.subscriptionError.errorContext %}
+            {% for context in subscription.subscriptionError.errorContext %}
                 <div class="rounded-md bg-gray-50 overflow-hidden">
                     <div class="flex bg-red-600 p-4">
                         <div class="flex-shrink-0">
@@ -51,7 +51,7 @@
                         {{ heroicon('exclamation-circle', class='h-5 w-5 text-red-800') }}
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-sm font-medium text-red-800">{{ projection.projectionError.errorMessage }}</h3>
+                        <h3 class="text-sm font-medium text-red-800">{{ subscription.subscriptionError.errorMessage }}</h3>
                     </div>
                 </div>
             </div>

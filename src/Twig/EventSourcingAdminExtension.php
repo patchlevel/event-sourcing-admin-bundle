@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Patchlevel\EventSourcingAdminBundle\Twig;
 
-use Patchlevel\EventSourcing\EventBus\Message;
+use Patchlevel\EventSourcing\Aggregate\AggregateHeader;
+use Patchlevel\EventSourcing\Message\Message;
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
 use Patchlevel\EventSourcing\Serializer\Encoder\JsonEncoder;
@@ -50,7 +51,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
     /** @return class-string */
     public function aggregateClass(Message $message): string
     {
-        return $this->aggregateRootRegistry->aggregateClass($message->aggregateName());
+        return $this->aggregateRootRegistry->aggregateClass($message->header(AggregateHeader::class)->aggregateName);
     }
 
     /** @return class-string */
@@ -76,6 +77,8 @@ final class EventSourcingAdminExtension extends AbstractExtension
 
     public function profilerToken(Message $message): ?string
     {
+        return null;
+
         $headers = $message->customHeaders();
         $requestId = $headers['requestId'] ?? null;
 

@@ -1,18 +1,20 @@
 <dl class="divide-y divide-gray-100">
-    {{ _self.text('Aggregate', message.aggregateName) }}
+    {% set aggregateHeader = message.header("Patchlevel\\EventSourcing\\Aggregate\\AggregateHeader") %}
+
+    {{ _self.text('Aggregate', aggregateHeader.aggregateName) }}
     {{ _self.text('Aggregate Class', eventsourcing_aggregate_class(message)) }}
 
     <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 group/parent">
         <dt class="text-sm font-medium leading-6 text-gray-900">Aggregate Id</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
-            {{ message.aggregateId }}
-            <a class="group-hover/parent:visible invisible" href="{{ path('patchlevel_event_sourcing_admin_inspection_show', {aggregateName: message.aggregateName, aggregateId: message.aggregateId}) }}">
+            {{ aggregateHeader.aggregateId }}
+            <a class="group-hover/parent:visible invisible" href="{{ path('patchlevel_event_sourcing_admin_inspection_show', {aggregateName: aggregateHeader.aggregateName, aggregateId: aggregateHeader.aggregateId}) }}">
                 {{ heroicon('identification', 'h-5 w-5 -mt-1 text-gray-400 inline') }}
             </a>
         </dd>
     </div>
 
-    {{ _self.text('Aggregate Playhead', message.playhead) }}
+    {{ _self.text('Aggregate Playhead', aggregateHeader.playhead) }}
 
     <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 group/parent">
         <dt class="text-sm font-medium leading-6 text-gray-900">Event Name</dt>
@@ -34,7 +36,7 @@
         </dd>
     </div>
 
-    {{ _self.text('Recorded on', message.recordedOn|date('Y-m-d H:i:s')) }}
+    {{ _self.text('Recorded on', aggregateHeader.recordedOn|date('Y-m-d H:i:s')) }}
     <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Profiler Token</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
@@ -49,7 +51,9 @@
         </dd>
     </div>
     {{ _self.json('Event Payload', eventsourcing_event_payload(message)) }}
-    {% if message.customHeaders %}
+
+
+    {% if message.customHeaders|default(false) %}
         {{ _self.json('Custom Headers', message.customHeaders|json_encode(constant('JSON_PRETTY_PRINT'))) }}
     {% else %}
         {{ _self.text('Custom Headers', '-') }}

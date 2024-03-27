@@ -10,25 +10,29 @@ patchlevel_event_sourcing_admin_store_show:
   path: /store
   controller: Patchlevel\EventSourcingAdminBundle\Controller\StoreController::showAction
 
-patchlevel_event_sourcing_admin_projection_show:
-  path: /projection
-  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::showAction
+patchlevel_event_sourcing_admin_subscription_show:
+  path: /subscription
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::showAction
 
-patchlevel_eventsourcingadmin_projection_rebuild:
-  path: /projection/{id}/rebuild
-  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::rebuildAction
+patchlevel_eventsourcingadmin_subscription_rebuild:
+  path: /subscription/{id}/rebuild
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::rebuildAction
 
-patchlevel_eventsourcingadmin_projection_pause:
-  path: /projection/{id}/pause
-  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::pauseAction
+patchlevel_eventsourcingadmin_subscription_pause:
+  path: /subscription/{id}/pause
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::pauseAction
 
-patchlevel_eventsourcingadmin_projection_reactivate:
-  path: /projection/{id}/reactivate
-  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::reactivateAction
+patchlevel_eventsourcingadmin_subscription_setup:
+  path: /subscription/{id}/setup
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::setupAction
 
-patchlevel_eventsourcingadmin_projection_remove:
-  path: /projection/{id}/remove
-  controller: Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController::removeAction
+patchlevel_eventsourcingadmin_subscription_reactivate:
+  path: /subscription/{id}/reactivate
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::reactivateAction
+
+patchlevel_eventsourcingadmin_subscription_remove:
+  path: /subscription/{id}/remove
+  controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::removeAction
 
 patchlevel_event_sourcing_admin_inspection_index:
   path: /inspection

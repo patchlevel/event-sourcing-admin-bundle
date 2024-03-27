@@ -17,6 +17,8 @@ class RequestIdDecorator implements MessageDecorator
 
     public function __invoke(Message $message): Message
     {
+        return $message;
+
         $request = $this->requestStack->getMainRequest();
 
         if (!$request) {

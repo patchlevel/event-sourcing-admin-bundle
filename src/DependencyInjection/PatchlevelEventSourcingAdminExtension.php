@@ -17,7 +17,7 @@ use Patchlevel\EventSourcingAdminBundle\Controller\DefaultController;
 use Patchlevel\EventSourcingAdminBundle\Controller\EventController;
 use Patchlevel\EventSourcingAdminBundle\Controller\GraphController;
 use Patchlevel\EventSourcingAdminBundle\Controller\InspectionController;
-use Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController;
+use Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\StoreController;
 use Patchlevel\EventSourcingAdminBundle\Decorator\RequestIdDecorator;
 use Patchlevel\EventSourcingAdminBundle\Listener\RequestIdListener;
@@ -82,7 +82,7 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
             ])
             ->addTag('controller.service_arguments');
 
-        $container->register(ProjectionController::class)
+        $container->register(SubscriptionController::class)
             ->setArguments([
                 new Reference('twig'),
                 new Reference(SubscriptionEngine::class),

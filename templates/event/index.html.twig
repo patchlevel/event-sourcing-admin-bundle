@@ -64,26 +64,14 @@
                             </dl>
 
                             <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibold">
-                                Sources ({{ event.sources|length }})
+                                Projectors ({{ event.subscribers|length }})
                             </div>
 
                             <ul>
-                                {% for node in event.sources|sort((a, b) => a.name <=> b.name)|sort((a, b) => a.category <=> b.category) %}
-                                    {{ _self.node(node) }}
+                                {% for subscriber in event.subscribers %}
+                                    {{ _self.subscriber(subscriber) }}
                                 {% else %}
-                                    <li class="px-4 py-6">unknown sources</li>
-                                {% endfor %}
-                            </ul>
-
-                            <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibold">
-                                Projectors ({{ event.projectors|length }})
-                            </div>
-
-                            <ul>
-                                {% for projector in event.projectors %}
-                                    {{ _self.subscriber(projector) }}
-                                {% else %}
-                                    <li class="px-4 py-6">no projectors</li>
+                                    <li class="px-4 py-6">no subscriber</li>
                                 {% endfor %}
                             </ul>
 

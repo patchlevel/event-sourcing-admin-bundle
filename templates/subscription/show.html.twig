@@ -5,11 +5,11 @@
 
         <!-- Headline -->
         <div class="text-2xl font-bold mb-8">
-            Projections
+            Subscriptions
         </div>
 
         <div class="">
-            <form class="flex gap-2 items-end" action="{{ path('patchlevel_event_sourcing_admin_projection_show') }}">
+            <form class="flex gap-2 items-end" action="{{ path('patchlevel_event_sourcing_admin_subscription_show') }}">
                 <div class="w-48">
                     <label for="search" class="block text-xs font-medium leading-6 text-gray-900">Search</label>
                     <div class="mt-1">
@@ -71,7 +71,7 @@
 
                 {% if app.request.get('search') or app.request.get('group') or app.request.get('mode') or app.request.get('status') %}
                     <a class="rounded-md bg-red-600 px-2.5 py-1.5 font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                       href="{{ path('patchlevel_event_sourcing_admin_projection_show') }}">
+                       href="{{ path('patchlevel_event_sourcing_admin_subscription_show') }}">
                         {{ heroicon('backspace', 'h-6 w-6') }}
                     </a>
                 {% endif %}
@@ -109,39 +109,39 @@
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                            {% for projection in projections|sort((a, b) => a.id <=> b.id) %}
+                            {% for subscription in subscriptions|sort((a, b) => a.id <=> b.id) %}
                                 <tr class="group/row">
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ projection.id }}
+                                        {{ subscription.id }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ projection.group }}
+                                        {{ subscription.group }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ projection.runMode.value|replace({'_': ' '}) }}
+                                        {{ subscription.runMode.value|replace({'_': ' '}) }}
                                     </td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm {{ projection.position < messageCount ? 'text-yellow-500' : 'text-gray-500'}} text-right">
-                                        {{ projection.position }}
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm {{ subscription.position < messageCount ? 'text-yellow-500' : 'text-gray-500'}} text-right">
+                                        {{ subscription.position }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {% if projection.status.value == 'new' %}
+                                        {% if subscription.status.value == 'new' %}
                                             {{ _self.badge('New', 'fill-blue-500') }}
-                                        {% elseif projection.status.value == 'booting' %}
+                                        {% elseif subscription.status.value == 'booting' %}
                                             {{ _self.badge('Booting', 'fill-yellow-500') }}
-                                        {% elseif projection.status.value == 'active' %}
+                                        {% elseif subscription.status.value == 'active' %}
                                             {{ _self.badge('Active', 'fill-green-500') }}
-                                        {% elseif projection.status.value == 'finished' %}
+                                        {% elseif subscription.status.value == 'finished' %}
                                             {{ _self.badge('Finished', 'fill-green-500') }}
-                                        {% elseif projection.status.value == 'paused' %}
+                                        {% elseif subscription.status.value == 'paused' %}
                                             {{ _self.badge('Paused', 'fill-gray-500') }}
-                                        {% elseif projection.status.value == 'outdated' %}
+                                        {% elseif subscription.status.value == 'outdated' %}
                                             {{ _self.badge('Outdated', 'fill-gray-500') }}
-                                        {% elseif projection.status.value == 'error' %}
+                                        {% elseif subscription.status.value == 'error' %}
                                             {{ _self.badge('Error', 'fill-red-500') }}
                                         {% endif %}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ projection.lastSavedAt|date('Y-m-d H:i:s') }}
+                                        {{ subscription.lastSavedAt|date('Y-m-d H:i:s') }}
                                     </td>
                                     <td class="relative flex gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-6">
                                         <a href="#" class="text-gray-500 hover:text-gray-900"
@@ -156,22 +156,27 @@
                                                 </button>
                                             </form>
 
-                                            {{ include('@PatchlevelEventSourcingAdmin/projection/detail.html.twig', {
-                                                projection: projection,
+                                            {{ include('@PatchlevelEventSourcingAdmin/subscription/detail.html.twig', {
+                                                subscription: subscription,
                                             }) }}
                                         </dialog>
-                                        {% if projection.status.value in ['active', 'error'] %}
-                                        <a href="{{ path('patchlevel_eventsourcingadmin_projection_pause', {id: projection.id}) }}" class="text-gray-500 hover:text-gray-900">
+                                        {% if subscription.status.value in ['active', 'error'] %}
+                                        <a href="{{ path('patchlevel_eventsourcingadmin_subscription_pause', {id: subscription.id}) }}" class="text-gray-500 hover:text-gray-900">
                                             {{ heroicon('pause-circle', 'h-5 w-5') }}
                                         </a>
                                         {% endif %}
-                                        {% if projection.status.value in ['paused', 'error', 'finished', 'outdated'] %}
-                                            <a href="{{ path('patchlevel_eventsourcingadmin_projection_reactivate', {id: projection.id}) }}" class="text-gray-500 hover:text-gray-900">
+                                        {% if subscription.status.value in ['new'] %}
+                                            <a href="{{ path('patchlevel_eventsourcingadmin_subscription_setup', {id: subscription.id}) }}" class="text-gray-500 hover:text-gray-900">
                                                 {{ heroicon('play-circle', 'h-5 w-5') }}
                                             </a>
                                         {% endif %}
-                                        {% if projection.status.value in ['paused', 'error', 'outdated'] %}
-                                            <a href="{{ path('patchlevel_eventsourcingadmin_projection_remove', {id: projection.id}) }}" class="text-gray-500 hover:text-gray-900">
+                                        {% if subscription.status.value in ['paused', 'error', 'finished', 'outdated'] %}
+                                            <a href="{{ path('patchlevel_eventsourcingadmin_subscription_reactivate', {id: subscription.id}) }}" class="text-gray-500 hover:text-gray-900">
+                                                {{ heroicon('play-circle', 'h-5 w-5') }}
+                                            </a>
+                                        {% endif %}
+                                        {% if subscription.status.value in ['paused', 'error', 'outdated'] %}
+                                            <a href="{{ path('patchlevel_eventsourcingadmin_subscription_remove', {id: subscription.id}) }}" class="text-gray-500 hover:text-gray-900">
                                                 {{ heroicon('trash', 'h-5 w-5') }}
                                             </a>
                                         {% endif %}

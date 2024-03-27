@@ -8,24 +8,22 @@ use Patchlevel\EventSourcing\Attribute\Subscribe;
 use Patchlevel\EventSourcing\EventBus\ListenerDescriptor;
 use Patchlevel\EventSourcing\EventBus\ListenerProvider;
 use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
-use Patchlevel\EventSourcing\Metadata\Projector\ProjectorMetadataFactory;
+use Patchlevel\EventSourcing\Metadata\Subscriber\SubscriberMetadataFactory;
 use Patchlevel\EventSourcingAdminBundle\Projection\Node;
-use Patchlevel\EventSourcingAdminBundle\Projection\TraceProjector;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 final class EventController
 {
     /**
-     * @param iterable<object> $projectors
+     * @param iterable<object> $subscribers
      */
     public function __construct(
-        private readonly Environment              $twig,
-        private readonly EventRegistry            $eventRegistry,
-        private readonly ListenerProvider         $listenerProvider,
-        private readonly iterable                 $projectors,
-        private readonly ProjectorMetadataFactory $projectorMetadataFactory,
-        private readonly TraceProjector|null      $traceProjector,
+        private readonly Environment               $twig,
+        private readonly EventRegistry             $eventRegistry,
+        private readonly ListenerProvider          $listenerProvider,
+        private readonly iterable                  $subscribers,
+        private readonly SubscriberMetadataFactory $subscriberMetadataFactory,
     )
     {
     }
@@ -39,8 +37,7 @@ final class EventController
                 'name' => $eventName,
                 'class' => $eventClass,
                 'listeners' => $this->listenerMethods($eventClass),
-                'projectors' => $this->projectorsMethods($eventClass),
-                'sources' => $this->source($eventClass),
+                'subscribers' => $this->subscribersMethods($eventClass),
             ];
         }
 
@@ -57,22 +54,22 @@ final class EventController
         );
     }
 
-    private function projectorsMethods(string $eventClass): array
+    private function subscribersMethods(string $eventClass): array
     {
         $result = [];
 
-        foreach ($this->projectors as $projector) {
-            $metadata = $this->projectorMetadataFactory->metadata($projector::class);
+        foreach ($this->subscribers as $subscriber) {
+            $metadata = $this->subscriberMetadataFactory->metadata($subscriber::class);
 
             if (array_key_exists($eventClass, $metadata->subscribeMethods)) {
                 foreach ($metadata->subscribeMethods[$eventClass] as $method) {
-                    $result[] = sprintf('%s::%s', $projector::class, $method);
+                    $result[] = sprintf('%s::%s', $subscriber::class, $method->name);
                 }
             }
 
             if (array_key_exists(Subscribe::ALL, $metadata->subscribeMethods)) {
                 foreach ($metadata->subscribeMethods[Subscribe::ALL] as $method) {
-                    $result[] = sprintf('%s::%s', $projector::class, $method);
+                    $result[] = sprintf('%s::%s', $subscriber::class, $method->name);
                 }
             }
         }

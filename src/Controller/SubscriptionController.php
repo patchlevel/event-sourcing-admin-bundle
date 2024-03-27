@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-final class ProjectionController
+final class SubscriptionController
 {
     public function __construct(
         private readonly Environment $twig,
@@ -36,7 +36,7 @@ final class ProjectionController
             $groups[$subscription->group()] = true;
         }
 
-        $filteredProjections = [];
+        $filteredSubscriptions = [];
         $search = $request->get('search');
         $group = $request->get('group');
         $mode = $request->get('mode');
@@ -60,12 +60,12 @@ final class ProjectionController
                 continue;
             }
 
-            $filteredProjections[] = $subscription;
+            $filteredSubscriptions[] = $subscription;
         }
 
         return new Response(
-            $this->twig->render('@PatchlevelEventSourcingAdmin/projection/show.html.twig', [
-                'projections' => $filteredProjections,
+            $this->twig->render('@PatchlevelEventSourcingAdmin/subscription/show.html.twig', [
+                'subscriptions' => $filteredSubscriptions,
                 'messageCount' => $messageCount,
                 'statuses' => array_map(fn (Status $status) => $status->value, Status::cases()),
                 'modes' => array_map(fn (RunMode $mode) => $mode->value, RunMode::cases()),
@@ -82,7 +82,7 @@ final class ProjectionController
         $this->engine->boot($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
+            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
         );
     }
 
@@ -93,7 +93,7 @@ final class ProjectionController
         $this->engine->pause($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
+            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
         );
     }
 
@@ -104,7 +104,18 @@ final class ProjectionController
         $this->engine->boot($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
+            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
+        );
+    }
+
+    public function setupAction(string $id): Response
+    {
+        $criteria = new SubscriptionEngineCriteria([$id]);
+
+        $this->engine->setup($criteria);
+
+        return new RedirectResponse(
+            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
         );
     }
 
@@ -115,7 +126,7 @@ final class ProjectionController
         $this->engine->reactivate($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
+            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
         );
     }
 
@@ -126,7 +137,7 @@ final class ProjectionController
         $this->engine->remove($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_projection_show'),
+            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
         );
     }
 }
