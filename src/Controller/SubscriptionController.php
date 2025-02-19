@@ -100,14 +100,31 @@ final class SubscriptionController
         );
     }
 
-    public function bootAction(string $id): Response
+    public function bootAction(Request $request): Response
     {
-        $criteria = new SubscriptionEngineCriteria([$id]);
+        $criteria = $this->criteria($request);
+        $result = $this->engine->boot($criteria);
 
-        $this->engine->boot($criteria);
+        return new Response(
+            $this->twig->render('@PatchlevelEventSourcingAdmin/subscription/status.html.twig', [
+                'type' => 'boot',
+                'result' => $result,
+                'criteria' => $criteria,
+            ]),
+        );
+    }
 
-        return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
+    public function runAction(Request $request): Response
+    {
+        $criteria = $this->criteria($request);
+        $result = $this->engine->run($criteria);
+
+        return new Response(
+            $this->twig->render('@PatchlevelEventSourcingAdmin/subscription/status.html.twig', [
+                'type' => 'run',
+                'criteria' => $criteria,
+                'result' => $result,
+            ]),
         );
     }
 
@@ -142,5 +159,16 @@ final class SubscriptionController
         return new RedirectResponse(
             $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
         );
+    }
+
+    private function criteria(Request $request): SubscriptionEngineCriteria
+    {
+        $id = $request->query->get('id');
+        $ids = $id ? [$id] : null;
+
+        $group = $request->query->get('group');
+        $groups = $group ? [$group] : null;
+
+        return new SubscriptionEngineCriteria($ids, $groups);
     }
 }
