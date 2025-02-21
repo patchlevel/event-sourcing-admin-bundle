@@ -1,18 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Method Patchlevel\\EventSourcingAdminBundle\\Decorator\\RequestIdDecorator\:\:__invoke\(\) has parameter \$message with generic class Patchlevel\\EventSourcing\\Message\\Message but does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Decorator/RequestIdDecorator.php
-
-		-
-			message: '#^Method Patchlevel\\EventSourcingAdminBundle\\Decorator\\RequestIdDecorator\:\:__invoke\(\) return type with generic class Patchlevel\\EventSourcing\\Message\\Message does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Decorator/RequestIdDecorator.php
-
-		-
 			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition\:\:children\(\)\.$#'
 			identifier: method.notFound
 			count: 1

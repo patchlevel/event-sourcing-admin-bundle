@@ -1,0 +1,50 @@
+{% extends '@PatchlevelEventSourcingAdmin/layout.html.twig' %}
+
+{% block content %}
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+            <ul role="list"
+                class="divide-y divide-gray-100 overflow-hidden bg-white ring-1 shadow-xs ring-gray-900/5 sm:rounded-xl">
+                {% for option in result %}
+                    <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
+                        <div class="flex min-w-0 gap-x-4">
+                            <div class="min-w-0 flex-auto">
+                                <p class="text-sm/6 font-semibold text-gray-900">
+                                    <a data-add-hash href="{{ path('patchlevel_event_sourcing_admin_inspection_show', {aggregateName: option.name, aggregateId: option.id}) }}">
+                                        <span class="absolute inset-x-0 -top-px bottom-0"></span>
+                                        {{ option.name }}
+                                    </a>
+                                </p>
+                                <p class="mt-1 flex text-xs/5 text-gray-500">
+                                    {{ option.id }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex shrink-0 items-center">
+                            <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                 aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd"
+                                      d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                                      clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="px-4 py-5 sm:px-6">
+                        <div class="text-center text-gray-500">
+                            No results found
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('[data-add-hash]').forEach(function (element) {
+              element.href = element.href + window.location.hash;
+            });
+        });
+    </script>
+{% endblock %}

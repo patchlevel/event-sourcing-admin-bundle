@@ -79,3 +79,12 @@ when@dev:
 
 If you run this on production you would need to install this package as a normal dependency and adjust the configuration
 accordingly. Also be sure to place it behind a login / security measure.
+
+## Development
+
+For development you can use the following commands:
+
+```bash
+npm install
+npm run watch
+```

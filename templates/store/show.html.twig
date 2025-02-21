@@ -113,6 +113,10 @@
                                                class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
                                                 {{ heroicon('clipboard', 'h-5 w-5 inline') }}
                                             </a>
+                                            <a href="{{ path('patchlevel_event_sourcing_admin_inspection_stream', { stream: eventsourcing_stream_name(message) }) }}#{{ eventsourcing_playhead(message) }}"
+                                               class="text-gray-500 hover:text-gray-900 invisible group-hover/parent:visible">
+                                                {{ heroicon('identification', 'h-5 w-5 inline') }}
+                                            </a>
                                         </td>
                                     {% else %}
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 group/parent">

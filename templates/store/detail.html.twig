@@ -1,6 +1,14 @@
 <dl class="divide-y divide-gray-100">
     {% if eventsourcing_uses_stream_store() %}
-        {{ _self.text('Stream', eventsourcing_stream_name(message)) }}
+        <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 group/parent">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Stream</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
+                {{ eventsourcing_stream_name(message) }}
+                <a class="group-hover/parent:visible invisible" href="{{ path('patchlevel_event_sourcing_admin_inspection_stream', {stream: eventsourcing_stream_name(message)}) }}#{{ eventsourcing_playhead(message) }}">
+                    {{ heroicon('identification', 'h-5 w-5 -mt-1 text-gray-400 inline') }}
+                </a>
+            </dd>
+        </div>
     {% else %}
         {{ _self.text('Aggregate', eventsourcing_aggregate_name(message)) }}
         {{ _self.text('Aggregate Class', eventsourcing_aggregate_class(message)) }}
@@ -9,7 +17,7 @@
             <dt class="text-sm font-medium leading-6 text-gray-900">Aggregate Id</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-500 sm:col-span-2 sm:mt-0">
                 {{ eventsourcing_aggregate_id(message) }}
-                <a class="group-hover/parent:visible invisible" href="{{ path('patchlevel_event_sourcing_admin_inspection_show', {aggregateName: eventsourcing_aggregate_name(message), aggregateId: eventsourcing_aggregate_id(message)}) }}">
+                <a class="group-hover/parent:visible invisible" href="{{ path('patchlevel_event_sourcing_admin_inspection_show', {aggregateName: eventsourcing_aggregate_name(message), aggregateId: eventsourcing_aggregate_id(message)}) }}#{{ eventsourcing_playhead(message) }}">
                     {{ heroicon('identification', 'h-5 w-5 -mt-1 text-gray-400 inline') }}
                 </a>
             </dd>

@@ -29,8 +29,11 @@ use Throwable;
 use Traversable;
 use Twig\Environment;
 
+use function count;
 use function json_encode;
+use function preg_match;
 use function sprintf;
+use function str_replace;
 
 use const JSON_PRETTY_PRINT;
 use const JSON_THROW_ON_ERROR;
@@ -69,6 +72,54 @@ final class InspectionController
         return new Response(
             $this->twig->render('@PatchlevelEventSourcingAdmin/inspection/index.html.twig', [
                 'aggregates' => $this->aggregateRootRegistry->aggregateNames(),
+            ]),
+        );
+    }
+
+    public function streamAction(Request $request, string $stream): Response
+    {
+        $aggregateClassList = $this->aggregateRootRegistry->aggregateClasses();
+
+        $result = [];
+
+        foreach ($aggregateClassList as $aggregateClass) {
+            $metadata = $this->aggregateRootMetadataFactory->metadata($aggregateClass);
+
+            $regex = str_replace(
+                '{id}',
+                '(.+)',
+                $metadata->streamName,
+            );
+
+            if (!preg_match('#' . $regex . '#', $stream, $matches)) {
+                continue;
+            }
+
+            $aggregateId = $matches[1];
+
+            if ($metadata->streamName($aggregateId) !== $stream) {
+                continue;
+            }
+
+            $result[] = [
+                'name' => $metadata->name,
+                'id' => $matches[1],
+            ];
+        }
+
+        if (count($result) === 1) {
+            return new RedirectResponse(
+                $this->router->generate('patchlevel_event_sourcing_admin_inspection_show', [
+                    'aggregateName' => $result[0]['name'],
+                    'aggregateId' => $result[0]['id'],
+                ]),
+            );
+        }
+
+        return new Response(
+            $this->twig->render('@PatchlevelEventSourcingAdmin/inspection/select.html.twig', [
+                'stream' => $stream,
+                'result' => $result,
             ]),
         );
     }
