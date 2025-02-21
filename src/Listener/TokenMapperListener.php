@@ -7,7 +7,7 @@ namespace Patchlevel\EventSourcingAdminBundle\Listener;
 use Patchlevel\EventSourcingAdminBundle\TokenMapper;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-class TokenMapperListener
+final class TokenMapperListener
 {
     public function __construct(
         private readonly TokenMapper $tokenMapper,

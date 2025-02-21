@@ -11,7 +11,7 @@ use function mt_rand;
 use function substr;
 use function uniqid;
 
-class RequestIdListener
+final class RequestIdListener
 {
     public const REQUEST_ID_ATTRIBUTE = '_request-id';
 
