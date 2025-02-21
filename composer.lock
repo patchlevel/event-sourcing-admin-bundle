@@ -7390,12 +7390,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "70eb886a27427421cf1bd612067810c9fb1cbb5c"
+                "reference": "02780e3f62acd0a085f9dea976548ac6b97cff7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/70eb886a27427421cf1bd612067810c9fb1cbb5c",
-                "reference": "70eb886a27427421cf1bd612067810c9fb1cbb5c",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/02780e3f62acd0a085f9dea976548ac6b97cff7c",
+                "reference": "02780e3f62acd0a085f9dea976548ac6b97cff7c",
                 "shasum": ""
             },
             "conflict": {
@@ -7758,7 +7758,7 @@
                 "mantisbt/mantisbt": "<=2.26.3",
                 "marcwillmann/turn": "<0.3.3",
                 "matyhtf/framework": "<3.0.6",
-                "mautic/core": "<4.4.13|>=5,<5.1.1",
+                "mautic/core": "<4.4.13|>=5.0.0.0-alpha,<5.1.1",
                 "mautic/core-lib": ">=1.0.0.0-beta,<4.4.13|>=5.0.0.0-alpha,<5.1.1",
                 "maximebf/debugbar": "<1.19",
                 "mdanter/ecc": "<2",
@@ -8256,7 +8256,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-18T20:05:22+00:00"
+            "time": "2025-02-21T22:04:29+00:00"
         },
         {
             "name": "sanmai/later",
