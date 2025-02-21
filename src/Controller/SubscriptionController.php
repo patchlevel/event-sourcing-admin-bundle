@@ -77,7 +77,7 @@ final class SubscriptionController
         );
     }
 
-    public function rebuildAction(string $id): Response
+    public function rebuildAction(Request $request, string $id): Response
     {
         $criteria = new SubscriptionEngineCriteria([$id]);
 
@@ -85,90 +85,94 @@ final class SubscriptionController
         $this->engine->boot($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
+            $this->router->generate(
+                'patchlevel_event_sourcing_admin_subscription_show',
+                $request->query->all(),
+            ),
         );
     }
 
-    public function pauseAction(string $id): Response
+    public function pauseAction(Request $request, string $id): Response
     {
         $criteria = new SubscriptionEngineCriteria([$id]);
 
         $this->engine->pause($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
+            $this->router->generate(
+                'patchlevel_event_sourcing_admin_subscription_show',
+                $request->query->all(),
+            ),
         );
     }
 
-    public function bootAction(Request $request): Response
-    {
-        $criteria = $this->criteria($request);
-        $result = $this->engine->boot($criteria);
-
-        return new Response(
-            $this->twig->render('@PatchlevelEventSourcingAdmin/subscription/status.html.twig', [
-                'type' => 'boot',
-                'result' => $result,
-                'criteria' => $criteria,
-            ]),
-        );
-    }
-
-    public function runAction(Request $request): Response
-    {
-        $criteria = $this->criteria($request);
-        $result = $this->engine->run($criteria);
-
-        return new Response(
-            $this->twig->render('@PatchlevelEventSourcingAdmin/subscription/status.html.twig', [
-                'type' => 'run',
-                'criteria' => $criteria,
-                'result' => $result,
-            ]),
-        );
-    }
-
-    public function setupAction(string $id): Response
+    public function bootAction(Request $request, string $id): Response
     {
         $criteria = new SubscriptionEngineCriteria([$id]);
 
-        $this->engine->setup($criteria, skipBooting: true);
+        $this->engine->boot($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
+            $this->router->generate(
+                'patchlevel_event_sourcing_admin_subscription_show',
+                $request->query->all(),
+            ),
         );
     }
 
-    public function reactivateAction(string $id): Response
+    public function runAction(Request $request, string $id): Response
+    {
+        $criteria = new SubscriptionEngineCriteria([$id]);
+
+        $this->engine->run($criteria);
+
+        return new RedirectResponse(
+            $this->router->generate(
+                'patchlevel_event_sourcing_admin_subscription_show',
+                $request->query->all(),
+            ),
+        );
+    }
+
+    public function setupAction(Request $request, string $id): Response
+    {
+        $criteria = new SubscriptionEngineCriteria([$id]);
+
+        $this->engine->setup($criteria);
+
+        return new RedirectResponse(
+            $this->router->generate(
+                'patchlevel_event_sourcing_admin_subscription_show',
+                $request->query->all(),
+            ),
+        );
+    }
+
+    public function reactivateAction(Request $request, string $id): Response
     {
         $criteria = new SubscriptionEngineCriteria([$id]);
 
         $this->engine->reactivate($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
+            $this->router->generate(
+                'patchlevel_event_sourcing_admin_subscription_show',
+                $request->query->all(),
+            ),
         );
     }
 
-    public function removeAction(string $id): Response
+    public function removeAction(Request $request, string $id): Response
     {
         $criteria = new SubscriptionEngineCriteria([$id]);
 
         $this->engine->remove($criteria);
 
         return new RedirectResponse(
-            $this->router->generate('patchlevel_event_sourcing_admin_subscription_show'),
+            $this->router->generate(
+                'patchlevel_event_sourcing_admin_subscription_show',
+                $request->query->all(),
+            ),
         );
-    }
-
-    private function criteria(Request $request): SubscriptionEngineCriteria
-    {
-        $id = $request->query->get('id');
-        $ids = $id ? [$id] : null;
-
-        $group = $request->query->get('group');
-        $groups = $group ? [$group] : null;
-
-        return new SubscriptionEngineCriteria($ids, $groups);
     }
 }

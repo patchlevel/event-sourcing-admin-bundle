@@ -15,11 +15,11 @@ patchlevel_event_sourcing_admin_subscription_show:
   controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::showAction
 
 patchlevel_eventsourcingadmin_subscription_boot:
-  path: /subscription/boot
+  path: /subscription/{id}/boot
   controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::bootAction
 
 patchlevel_eventsourcingadmin_subscription_run:
-  path: /subscription/run
+  path: /subscription/{id}/run
   controller: Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController::runAction
 
 patchlevel_eventsourcingadmin_subscription_rebuild:
