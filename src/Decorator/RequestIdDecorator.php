@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 use function is_string;
 
-class RequestIdDecorator implements MessageDecorator
+final class RequestIdDecorator implements MessageDecorator
 {
     public function __construct(
         private readonly RequestStack $requestStack,

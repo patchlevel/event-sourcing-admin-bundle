@@ -14,7 +14,7 @@ use function fputcsv;
 use function sprintf;
 use function touch;
 
-class TokenMapper
+final class TokenMapper
 {
     /** @var array<string, string> */
     private array $map = [];
