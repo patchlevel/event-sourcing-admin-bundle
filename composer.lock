@@ -582,20 +582,20 @@
         },
         {
             "name": "patchlevel/event-sourcing-bundle",
-            "version": "3.10.0",
+            "version": "3.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing-bundle.git",
-                "reference": "41a770ef9a2aad8f183128e35f2daea0d53b3603"
+                "reference": "e281597bfb49921948a7ab9186f8bcc7e4afc2b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/41a770ef9a2aad8f183128e35f2daea0d53b3603",
-                "reference": "41a770ef9a2aad8f183128e35f2daea0d53b3603",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/e281597bfb49921948a7ab9186f8bcc7e4afc2b4",
+                "reference": "e281597bfb49921948a7ab9186f8bcc7e4afc2b4",
                 "shasum": ""
             },
             "require": {
-                "patchlevel/event-sourcing": "^3.10.0",
+                "patchlevel/event-sourcing": "^3.11.0",
                 "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
                 "symfony/cache": "^6.4.0|^7.0.0",
                 "symfony/config": "^6.4.0|^7.0.0",
@@ -659,9 +659,9 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing-bundle/issues",
-                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.10.0"
+                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.11.0"
             },
-            "time": "2025-02-19T12:01:23+00:00"
+            "time": "2025-04-18T03:24:55+00:00"
         },
         {
             "name": "patchlevel/hydrator",
