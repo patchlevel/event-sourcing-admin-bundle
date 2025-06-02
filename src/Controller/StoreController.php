@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Patchlevel\EventSourcingAdminBundle\Controller;
 
 use Patchlevel\EventSourcing\Metadata\AggregateRoot\AggregateRootRegistry;
+use Patchlevel\EventSourcing\Metadata\Event\EventRegistry;
 use Patchlevel\EventSourcing\Store\Criteria\Criteria;
 use Patchlevel\EventSourcing\Store\Criteria\CriteriaBuilder;
 use Patchlevel\EventSourcing\Store\Store;
@@ -18,6 +19,7 @@ final class StoreController
         private readonly Environment $twig,
         private readonly Store $store,
         private readonly AggregateRootRegistry $aggregateRootRegistry,
+        private readonly EventRegistry $eventRegistry,
     ) {
     }
 
@@ -42,6 +44,7 @@ final class StoreController
                 'messages' => $messages,
                 'count' => $count,
                 'aggregates' => $this->aggregateRootRegistry->aggregateNames(),
+                'events' => $this->eventRegistry->eventNames(),
                 'limit' => $limit,
                 'page' => $page,
             ]),
@@ -65,6 +68,11 @@ final class StoreController
         $streamName = $request->query->getString('streamName');
         if ($streamName) {
             $criteriaBuilder->streamName($streamName);
+        }
+
+        $event = $request->query->getString('event');
+        if ($event) {
+            $criteriaBuilder->events([$event]);
         }
 
         return $criteriaBuilder->build();
