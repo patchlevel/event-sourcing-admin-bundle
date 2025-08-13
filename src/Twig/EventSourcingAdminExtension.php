@@ -20,6 +20,8 @@ use Patchlevel\EventSourcing\Store\Store;
 use Patchlevel\EventSourcing\Store\StreamStore;
 use Patchlevel\EventSourcingAdminBundle\Message\Header\RequestIdHeader;
 use Patchlevel\EventSourcingAdminBundle\TokenMapper;
+use Psr\Container\ContainerInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -27,15 +29,50 @@ use function array_pop;
 use function explode;
 use function get_class;
 
-final class EventSourcingAdminExtension extends AbstractExtension
+final class EventSourcingAdminExtension extends AbstractExtension implements ServiceSubscriberInterface
 {
     public function __construct(
-        private readonly AggregateRootRegistry $aggregateRootRegistry,
-        private readonly EventRegistry $eventRegistry,
-        private readonly EventSerializer $eventSerializer,
-        private readonly TokenMapper $tokenMapper,
-        private readonly Store $store,
+        private readonly ContainerInterface $container,
     ) {
+    }
+
+    /**
+     * @return list<class-string>
+     */
+    public static function getSubscribedServices(): array
+    {
+        return [
+            AggregateRootRegistry::class,
+            EventRegistry::class,
+            EventSerializer::class,
+            TokenMapper::class,
+            Store::class,
+        ];
+    }
+
+    private function aggregateRootRegistry(): AggregateRootRegistry
+    {
+        return $this->container->get(AggregateRootRegistry::class);
+    }
+
+    private function eventRegistry(): EventRegistry
+    {
+        return $this->container->get(EventRegistry::class);
+    }
+
+    private function eventSerializer(): EventSerializer
+    {
+        return $this->container->get(EventSerializer::class);
+    }
+
+    private function tokenMapper(): TokenMapper
+    {
+        return $this->container->get(TokenMapper::class);
+    }
+
+    private function store(): Store
+    {
+        return $this->container->get(Store::class);
     }
 
     /** @return list<TwigFunction> */
@@ -71,7 +108,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
      */
     public function aggregateClass(Message $message): string
     {
-        return $this->aggregateRootRegistry->aggregateClass($message->header(AggregateHeader::class)->aggregateName);
+        return $this->aggregateRootRegistry()->aggregateClass($message->header(AggregateHeader::class)->aggregateName);
     }
 
     /** @param Message<object> $message */
@@ -88,7 +125,7 @@ final class EventSourcingAdminExtension extends AbstractExtension
 
     public function usesStreamStore(): bool
     {
-        return $this->store instanceof StreamStore;
+        return $this->store() instanceof StreamStore;
     }
 
     /** @param Message<object> $message */
@@ -148,13 +185,13 @@ final class EventSourcingAdminExtension extends AbstractExtension
     /** @param Message<object> $message */
     public function eventName(Message $message): string
     {
-        return $this->eventRegistry->eventName($this->eventClass($message));
+        return $this->eventRegistry()->eventName($this->eventClass($message));
     }
 
     /** @param Message<object> $message */
     public function eventPayload(Message $message): string
     {
-        return $this->eventSerializer->serialize(
+        return $this->eventSerializer()->serialize(
             $message->event(),
             [JsonEncoder::OPTION_PRETTY_PRINT => true],
         )->payload;
@@ -169,6 +206,6 @@ final class EventSourcingAdminExtension extends AbstractExtension
             return null;
         }
 
-        return $this->tokenMapper->get($requestIdHeader->requestId);
+        return $this->tokenMapper()->get($requestIdHeader->requestId);
     }
 }
