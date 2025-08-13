@@ -36,9 +36,7 @@ final class EventSourcingAdminExtension extends AbstractExtension implements Ser
     ) {
     }
 
-    /**
-     * @return list<class-string>
-     */
+    /** @return list<class-string> */
     public static function getSubscribedServices(): array
     {
         return [

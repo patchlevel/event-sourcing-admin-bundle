@@ -102,13 +102,11 @@ final class PatchlevelEventSourcingAdminExtension extends Extension
             ->addTag('controller.service_arguments');
 
         $container->register(EventSourcingAdminExtension::class)
-            ->setArguments([
-                new Reference(AggregateRootRegistry::class),
-                new Reference(EventRegistry::class),
-                new Reference(EventSerializer::class),
-                new Reference(TokenMapper::class),
-                new Reference(Store::class),
-            ])
+            ->addTag('container.service_subscriber', ['id' => Store::class])
+            ->addTag('container.service_subscriber', ['id' => AggregateRootRegistry::class])
+            ->addTag('container.service_subscriber', ['id' => EventRegistry::class])
+            ->addTag('container.service_subscriber', ['id' => EventSerializer::class])
+            ->addTag('container.service_subscriber', ['id' => TokenMapper::class])
             ->addTag('twig.extension');
 
         $container->register(HeroiconsExtension::class)
