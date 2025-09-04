@@ -493,16 +493,16 @@
         },
         {
             "name": "patchlevel/event-sourcing",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing.git",
-                "reference": "4b5c32143135ca60275bd2de1a3a8c46167ef695"
+                "reference": "6f641dbd6bdbb25b9232ca5072edb5b489683bef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing/zipball/4b5c32143135ca60275bd2de1a3a8c46167ef695",
-                "reference": "4b5c32143135ca60275bd2de1a3a8c46167ef695",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing/zipball/6f641dbd6bdbb25b9232ca5072edb5b489683bef",
+                "reference": "6f641dbd6bdbb25b9232ca5072edb5b489683bef",
                 "shasum": ""
             },
             "require": {
@@ -523,18 +523,17 @@
                 "symfony/type-info": "^7.2.0"
             },
             "require-dev": {
-                "cspray/phinal": "dev-main#9826c3407056a4618f8bba303800403e47ccb3a7",
                 "doctrine/orm": "^2.18.0 || ^3.0.0",
                 "ext-pdo_sqlite": "~8.2.0 || ~8.3.0 || ~8.4.0",
                 "infection/infection": "^0.29.12",
                 "league/commonmark": "^2.6.1",
                 "patchlevel/coding-standard": "^1.3.0",
                 "patchlevel/event-sourcing-psalm-plugin": "^3.1.0",
+                "phpat/phpat": "^0.11.3",
                 "phpbench/phpbench": "^1.4.1",
-                "phpspec/prophecy-phpunit": "^2.3.0",
                 "phpstan/phpstan": "^2.1.11",
+                "phpstan/phpstan-phpunit": "^2.0",
                 "phpunit/phpunit": "^11.5.15",
-                "psalm/plugin-phpunit": "^0.19.3",
                 "roave/infection-static-analysis-plugin": "^1.37.0",
                 "symfony/messenger": "^5.4.31 || ^6.4.0 || ^7.0.1",
                 "symfony/var-dumper": "^5.4.29 || ^6.4.0 || ^7.0.0",
@@ -572,9 +571,9 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing/issues",
-                "source": "https://github.com/patchlevel/event-sourcing/tree/3.11.0"
+                "source": "https://github.com/patchlevel/event-sourcing/tree/3.12.0"
             },
-            "time": "2025-04-12T13:01:16+00:00"
+            "time": "2025-09-03T15:09:01+00:00"
         },
         {
             "name": "patchlevel/event-sourcing-bundle",
@@ -7580,12 +7579,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4fbe7e09e34b1554269750e19674f1f6fd84a4ae"
+                "reference": "3602c597d29de335a36c0b50b96cc161d853b54f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4fbe7e09e34b1554269750e19674f1f6fd84a4ae",
-                "reference": "4fbe7e09e34b1554269750e19674f1f6fd84a4ae",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/3602c597d29de335a36c0b50b96cc161d853b54f",
+                "reference": "3602c597d29de335a36c0b50b96cc161d853b54f",
                 "shasum": ""
             },
             "conflict": {
@@ -8009,7 +8008,7 @@
                 "marshmallow/nova-tiptap": "<5.7",
                 "matomo/matomo": "<1.11",
                 "matyhtf/framework": "<3.0.6",
-                "mautic/core": "<5.2.6|>=6.0.0.0-alpha,<6.0.2",
+                "mautic/core": "<5.2.8|>=6.0.0.0-alpha,<6.0.5",
                 "mautic/core-lib": ">=1.0.0.0-beta,<4.4.13|>=5.0.0.0-alpha,<5.1.1",
                 "maximebf/debugbar": "<1.19",
                 "mdanter/ecc": "<2",
@@ -8536,7 +8535,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-02T17:05:04+00:00"
+            "time": "2025-09-03T23:04:57+00:00"
         },
         {
             "name": "sanmai/di-container",
