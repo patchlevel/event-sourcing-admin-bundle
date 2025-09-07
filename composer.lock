@@ -577,20 +577,20 @@
         },
         {
             "name": "patchlevel/event-sourcing-bundle",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing-bundle.git",
-                "reference": "e281597bfb49921948a7ab9186f8bcc7e4afc2b4"
+                "reference": "587e5a546fdfdf427f240345478125f7c7c1f449"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/e281597bfb49921948a7ab9186f8bcc7e4afc2b4",
-                "reference": "e281597bfb49921948a7ab9186f8bcc7e4afc2b4",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/587e5a546fdfdf427f240345478125f7c7c1f449",
+                "reference": "587e5a546fdfdf427f240345478125f7c7c1f449",
                 "shasum": ""
             },
             "require": {
-                "patchlevel/event-sourcing": "^3.11.0",
+                "patchlevel/event-sourcing": "^3.12.0",
                 "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
                 "symfony/cache": "^6.4.0|^7.0.0",
                 "symfony/config": "^6.4.0|^7.0.0",
@@ -608,7 +608,7 @@
                 "doctrine/migrations": "^3.3.2",
                 "doctrine/orm": "^2.19.4|^3.1.2",
                 "ext-pdo_sqlite": "*",
-                "infection/infection": "^0.29.11",
+                "infection/infection": "^0.31.0",
                 "league/commonmark": "^2.4",
                 "patchlevel/coding-standard": "^1.3.0",
                 "phpspec/prophecy-phpunit": "^2.1.0",
@@ -654,9 +654,9 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing-bundle/issues",
-                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.11.0"
+                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.12.0"
             },
-            "time": "2025-04-18T03:24:55+00:00"
+            "time": "2025-09-06T09:49:32+00:00"
         },
         {
             "name": "patchlevel/hydrator",
@@ -9739,23 +9739,23 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "8.21.1",
+            "version": "8.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "2b801e950ae1cceb30bb3c0373141f553c99d3c3"
+                "reference": "a4cef983bad2e70125612d22b2f6e2bd1333d5c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/2b801e950ae1cceb30bb3c0373141f553c99d3c3",
-                "reference": "2b801e950ae1cceb30bb3c0373141f553c99d3c3",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/a4cef983bad2e70125612d22b2f6e2bd1333d5c2",
+                "reference": "a4cef983bad2e70125612d22b2f6e2bd1333d5c2",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7 || ^1.1.2",
                 "php": "^7.4 || ^8.0",
                 "phpstan/phpdoc-parser": "^2.3.0",
-                "squizlabs/php_codesniffer": "^3.13.2"
+                "squizlabs/php_codesniffer": "^3.13.4"
             },
             "require-dev": {
                 "phing/phing": "3.0.1|3.1.0",
@@ -9764,7 +9764,7 @@
                 "phpstan/phpstan-deprecation-rules": "2.0.3",
                 "phpstan/phpstan-phpunit": "2.0.7",
                 "phpstan/phpstan-strict-rules": "2.0.6",
-                "phpunit/phpunit": "9.6.8|10.5.48|11.4.4|11.5.27|12.3.7"
+                "phpunit/phpunit": "9.6.8|10.5.48|11.4.4|11.5.36|12.3.8"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
@@ -9788,7 +9788,7 @@
             ],
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/8.21.1"
+                "source": "https://github.com/slevomat/coding-standard/tree/8.22.0"
             },
             "funding": [
                 {
@@ -9800,7 +9800,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-31T13:32:28+00:00"
+            "time": "2025-09-06T09:14:48+00:00"
         },
         {
             "name": "spatie/array-to-xml",
