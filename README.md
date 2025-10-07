@@ -53,7 +53,7 @@ Features:
 ## Installation
 
 ```bash
-composer require --dev patchlevel/event-sourcing-bundle
+composer require --dev patchlevel/event-sourcing-admin-bundle
 ```
 
 ## Configuration
