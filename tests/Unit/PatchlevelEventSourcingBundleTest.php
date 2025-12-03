@@ -8,7 +8,6 @@ use Patchlevel\EventSourcing\Metadata\Message\MessageHeaderRegistry;
 use Patchlevel\EventSourcingAdminBundle\Controller\DefaultController;
 use Patchlevel\EventSourcingAdminBundle\Controller\EventController;
 use Patchlevel\EventSourcingAdminBundle\Controller\InspectionController;
-use Patchlevel\EventSourcingAdminBundle\Controller\ProjectionController;
 use Patchlevel\EventSourcingAdminBundle\Controller\StoreController;
 use Patchlevel\EventSourcingAdminBundle\Controller\SubscriptionController;
 use Patchlevel\EventSourcingAdminBundle\DependencyInjection\PatchlevelEventSourcingAdminExtension;
@@ -17,13 +16,10 @@ use Patchlevel\EventSourcingAdminBundle\PatchlevelEventSourcingAdminBundle;
 use Patchlevel\EventSourcingBundle\DependencyInjection\PatchlevelEventSourcingExtension;
 use Patchlevel\EventSourcingBundle\PatchlevelEventSourcingBundle;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class PatchlevelEventSourcingBundleTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testEmptyConfig(): void
     {
         $container = new ContainerBuilder();
@@ -61,11 +57,14 @@ class PatchlevelEventSourcingBundleTest extends TestCase
         self::assertTrue($container->has(StoreController::class));
         self::assertTrue($container->has(SubscriptionController::class));
 
-        /** @messageHeaderRegistry MessageHeaderRegistry $messageHeaderRegistry */
+        /** @var MessageHeaderRegistry $messageHeaderRegistry */
         $messageHeaderRegistry = $container->get(MessageHeaderRegistry::class);
         self::assertTrue($messageHeaderRegistry->hasHeaderClass(RequestIdHeader::class));
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function compileContainer(ContainerBuilder $container, array $config): void
     {
         $bundle = new PatchlevelEventSourcingBundle();

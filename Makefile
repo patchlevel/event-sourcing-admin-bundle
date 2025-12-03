@@ -14,27 +14,26 @@ cs: vendor                                                                      
 
 .PHONY: phpstan
 phpstan: vendor                                                                 ## run phpstan static code analyser
-	vendor/bin/phpstan analyse
+	php -d memory_limit=312M vendor/bin/phpstan analyse
 
 .PHONY: phpstan-baseline
 phpstan-baseline: vendor                                                        ## run phpstan static code analyser
-	vendor/bin/phpstan analyse --generate-baseline
+	php -d memory_limit=312M vendor/bin/phpstan analyse --generate-baseline
 
-.PHONY: psalm
-psalm: vendor                                                                   ## run psalm static code analyser
-	vendor/bin/psalm
+.PHONY: infection
+infection: vendor                                                               ## run infection
+	php -d memory_limit=312M vendor/bin/infection --threads=5
 
-.PHONY: psalm-baseline
-psalm-baseline: vendor                                                          ## run psalm static code analyser
-	vendor/bin/psalm --update-baseline --set-baseline=baseline.xml
-
+.PHONY: infection-diff
+infection-diff: vendor                                                          ## run infection on differences
+	php -d memory_limit=312M vendor/bin/infection --threads=max --git-diff-lines --git-diff-base=origin/HEAD --ignore-msi-with-no-mutations --only-covered --min-msi=80 --min-covered-msi=95
 
 .PHONY: phpunit
 phpunit: vendor                                                                 ## run phpunit tests
 	XDEBUG_MODE=coverage vendor/bin/phpunit
 
 .PHONY: static
-static: psalm phpstan phpcs-check                                               ## run static analyser
+static: phpstan phpcs-check                                               ## run static analyser
 
 test: phpunit                                                                   ## run tests
 

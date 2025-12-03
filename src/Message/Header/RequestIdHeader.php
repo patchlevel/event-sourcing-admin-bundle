@@ -6,7 +6,7 @@ namespace Patchlevel\EventSourcingAdminBundle\Message\Header;
 
 use Patchlevel\EventSourcing\Attribute\Header;
 
-/** @psalm-immutable */
+/** @immutable */
 #[Header(name: 'requestId')]
 final class RequestIdHeader
 {
