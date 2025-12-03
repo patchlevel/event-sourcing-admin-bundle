@@ -37,7 +37,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * @psalm-type Config = array{
+ * @phpstan-type Config = array{
  *     enabled: bool
  * }
  */

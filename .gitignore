@@ -5,3 +5,5 @@ phpunit.xml
 .phpcs-cache
 phpstan.neon
 node_modules/
+infection.log
+infection.html
