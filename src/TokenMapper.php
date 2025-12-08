@@ -54,7 +54,7 @@ final class TokenMapper
             throw new RuntimeException(sprintf('File [%s] not found', $this->path()));
         }
 
-        fputcsv($file, [$requestId, $debugToken]);
+        fputcsv($file, [$requestId, $debugToken], escape: "");
         fclose($file);
     }
 
@@ -73,7 +73,7 @@ final class TokenMapper
             throw new RuntimeException(sprintf('File [%s] not found', $this->path()));
         }
 
-        while ($row = fgetcsv($file)) {
+        while ($row = fgetcsv($file, escape: "")) {
             /** @var array{0: string, 1: string} $row */
             $map[$row[0]] = $row[1];
         }
