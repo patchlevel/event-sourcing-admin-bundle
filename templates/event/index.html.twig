@@ -52,7 +52,7 @@
             <dl class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow ring-1 ring-black ring-opacity-5 w-2/3 sticky top-4">
                 <div class="text-sm text-gray-500">
                     {% for event in events %}
-                        {% if event.name == app.request.get('name') %}
+                        {% if event.name == app.request.query.get('name') %}
 
                             <div class="px-4 py-6 bg-gray-50 text-gray-500 font-semibold">
                                 Details
@@ -92,7 +92,7 @@
                         {% endif %}
                     {% endfor %}
 
-                    {% if not app.request.get('name') %}
+                    {% if not app.request.query.get('name') %}
 
                         <div class="py-24 text-xl text-gray-400 text-center">
                             {{ heroicon('calendar', 'h-12 w-12 text-gray-400 mx-auto mb-2') }}
