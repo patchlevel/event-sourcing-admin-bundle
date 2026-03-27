@@ -574,20 +574,21 @@
         },
         {
             "name": "patchlevel/event-sourcing-bundle",
-            "version": "3.14.1",
+            "version": "3.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing-bundle.git",
-                "reference": "9f771c69ba4f6d9cba1e83888f27f09ff91a66fe"
+                "reference": "f7e5c80f852366b62ce09057f5914a0bfbf6baf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/9f771c69ba4f6d9cba1e83888f27f09ff91a66fe",
-                "reference": "9f771c69ba4f6d9cba1e83888f27f09ff91a66fe",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/f7e5c80f852366b62ce09057f5914a0bfbf6baf1",
+                "reference": "f7e5c80f852366b62ce09057f5914a0bfbf6baf1",
                 "shasum": ""
             },
             "require": {
-                "patchlevel/event-sourcing": "^3.13.0",
+                "patchlevel/event-sourcing": "^3.18.0",
+                "patchlevel/hydrator": "^1.18.0",
                 "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
                 "symfony/cache": "^6.4.0 || ^7.0.0 || ^8.0.0",
                 "symfony/config": "^6.4.0 || ^7.0.0 || ^8.0.0",
@@ -605,13 +606,14 @@
                 "doctrine/migrations": "^3.3.2",
                 "doctrine/orm": "^2.19.4 || ^3.1.2",
                 "ext-pdo_sqlite": "*",
-                "infection/infection": "^0.31.9",
+                "infection/infection": "^0.32.0",
                 "league/commonmark": "^2.4",
                 "patchlevel/coding-standard": "^1.3.0",
                 "phpstan/phpstan": "^2.1.32",
                 "phpstan/phpstan-symfony": "^2.0.8",
                 "phpunit/phpunit": "^11.5.45",
                 "roave/security-advisories": "dev-master",
+                "symfony/clock": "^6.4.0 || ^7.0.0 || ^8.0.0",
                 "symfony/uid": "^6.4.0 || ^7.0.0 || ^8.0.0",
                 "symfony/var-dumper": "^6.4.0 || ^7.0.0 || ^8.0.0",
                 "symfony/web-profiler-bundle": "^6.4.0 || ^7.0.0 || ^8.0.0",
@@ -649,9 +651,9 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing-bundle/issues",
-                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.14.1"
+                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.15.0"
             },
-            "time": "2025-12-11T17:40:17+00:00"
+            "time": "2026-03-26T12:54:33+00:00"
         },
         {
             "name": "patchlevel/hydrator",
@@ -5826,12 +5828,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "8522ed5a1cbb7828ed9bb1b3c12053f79da78155"
+                "reference": "b4cf097607afd6063b103f723d55cf481c04ee07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8522ed5a1cbb7828ed9bb1b3c12053f79da78155",
-                "reference": "8522ed5a1cbb7828ed9bb1b3c12053f79da78155",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/b4cf097607afd6063b103f723d55cf481c04ee07",
+                "reference": "b4cf097607afd6063b103f723d55cf481c04ee07",
                 "shasum": ""
             },
             "conflict": {
@@ -6275,7 +6277,7 @@
                 "leantime/leantime": "<3.3",
                 "lexik/jwt-authentication-bundle": "<2.10.7|>=2.11,<2.11.3",
                 "libreform/libreform": ">=2,<=2.0.8",
-                "librenms/librenms": "<26.2",
+                "librenms/librenms": "<26.3",
                 "liftkit/database": "<2.13.2",
                 "lightsaml/lightsaml": "<1.3.5",
                 "limesurvey/limesurvey": "<6.15.4",
@@ -6864,7 +6866,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-25T22:13:18+00:00"
+            "time": "2026-03-26T18:25:06+00:00"
         },
         {
             "name": "sanmai/di-container",
