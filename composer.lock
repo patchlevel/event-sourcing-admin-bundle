@@ -493,20 +493,20 @@
         },
         {
             "name": "patchlevel/event-sourcing",
-            "version": "3.18.0",
+            "version": "3.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing.git",
-                "reference": "d17688b827baaa87626fb5fc3f9d58faa47a13d2"
+                "reference": "8e47cf54d30b7938b2a20a6130a9cfd8b443051d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing/zipball/d17688b827baaa87626fb5fc3f9d58faa47a13d2",
-                "reference": "d17688b827baaa87626fb5fc3f9d58faa47a13d2",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing/zipball/8e47cf54d30b7938b2a20a6130a9cfd8b443051d",
+                "reference": "8e47cf54d30b7938b2a20a6130a9cfd8b443051d",
                 "shasum": ""
             },
             "require": {
-                "doctrine/dbal": "^4.0.0",
+                "doctrine/dbal": "^4.4.0",
                 "doctrine/migrations": "^3.3.2",
                 "patchlevel/hydrator": "^1.8.0",
                 "patchlevel/worker": "^1.4.0",
@@ -563,14 +563,26 @@
             "description": "A lightweight but also all-inclusive event sourcing library with a focus on developer experience",
             "homepage": "https://event-sourcing.patchlevel.io",
             "keywords": [
+                "Domain Driven Design",
+                "aggregates",
+                "cqrs",
+                "dcb",
                 "ddd",
-                "event-sourcing"
+                "dynamic consistency boundary",
+                "event driven",
+                "event-sourcing",
+                "events",
+                "message driven",
+                "messages",
+                "patchlevel",
+                "processor",
+                "projection"
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing/issues",
-                "source": "https://github.com/patchlevel/event-sourcing/tree/3.18.0"
+                "source": "https://github.com/patchlevel/event-sourcing/tree/3.19.0"
             },
-            "time": "2026-02-23T09:53:37+00:00"
+            "time": "2026-04-03T17:13:51+00:00"
         },
         {
             "name": "patchlevel/event-sourcing-bundle",
@@ -657,16 +669,16 @@
         },
         {
             "name": "patchlevel/hydrator",
-            "version": "1.19.0",
+            "version": "1.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/hydrator.git",
-                "reference": "5b79db6c2089cd3ddb5f08666179d85bda3160d7"
+                "reference": "53048465863d9a60e8238f8c268f2c93ddfa7326"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/hydrator/zipball/5b79db6c2089cd3ddb5f08666179d85bda3160d7",
-                "reference": "5b79db6c2089cd3ddb5f08666179d85bda3160d7",
+                "url": "https://api.github.com/repos/patchlevel/hydrator/zipball/53048465863d9a60e8238f8c268f2c93ddfa7326",
+                "reference": "53048465863d9a60e8238f8c268f2c93ddfa7326",
                 "shasum": ""
             },
             "require": {
@@ -715,9 +727,9 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/hydrator/issues",
-                "source": "https://github.com/patchlevel/hydrator/tree/1.19.0"
+                "source": "https://github.com/patchlevel/hydrator/tree/1.21.0"
             },
-            "time": "2026-03-29T12:04:47+00:00"
+            "time": "2026-04-03T15:42:19+00:00"
         },
         {
             "name": "patchlevel/worker",
@@ -5828,12 +5840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "61130731cdf896e60028ed82193a1bc3c50d032a"
+                "reference": "958bc6ccdb194912236265e4f36256e55bb0c9da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/61130731cdf896e60028ed82193a1bc3c50d032a",
-                "reference": "61130731cdf896e60028ed82193a1bc3c50d032a",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/958bc6ccdb194912236265e4f36256e55bb0c9da",
+                "reference": "958bc6ccdb194912236265e4f36256e55bb0c9da",
                 "shasum": ""
             },
             "conflict": {
@@ -5884,9 +5896,9 @@
                 "aureuserp/aureuserp": "<1.3.0.0-beta1",
                 "austintoddj/canvas": "<=3.4.2",
                 "auth0/auth0-php": ">=3.3,<=8.18",
-                "auth0/login": "<7.20",
-                "auth0/symfony": "<=5.5",
-                "auth0/wordpress": "<=5.4",
+                "auth0/login": "<=7.20",
+                "auth0/symfony": "<=5.7",
+                "auth0/wordpress": "<=5.5",
                 "automad/automad": "<2.0.0.0-alpha5",
                 "automattic/jetpack": "<9.8",
                 "avideo/avideo": "<=26",
@@ -6869,7 +6881,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-02T00:32:12+00:00"
+            "time": "2026-04-03T04:48:53+00:00"
         },
         {
             "name": "sanmai/di-container",
