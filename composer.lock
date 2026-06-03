@@ -586,16 +586,16 @@
         },
         {
             "name": "patchlevel/event-sourcing-bundle",
-            "version": "3.16.1",
+            "version": "3.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/patchlevel/event-sourcing-bundle.git",
-                "reference": "7d843961cdfb8e448a868922ad68763a83daf9b2"
+                "reference": "6f4ee056b096194c60f40205a7090cd23c12c0ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/7d843961cdfb8e448a868922ad68763a83daf9b2",
-                "reference": "7d843961cdfb8e448a868922ad68763a83daf9b2",
+                "url": "https://api.github.com/repos/patchlevel/event-sourcing-bundle/zipball/6f4ee056b096194c60f40205a7090cd23c12c0ac",
+                "reference": "6f4ee056b096194c60f40205a7090cd23c12c0ac",
                 "shasum": ""
             },
             "require": {
@@ -609,7 +609,8 @@
                 "symfony/event-dispatcher": "^6.4.1 || ^7.0.1 || ^8.0.0",
                 "symfony/finder": "^6.4.0 || ^7.0.0 || ^8.0.0",
                 "symfony/http-kernel": "^6.4.1 || ^7.0.1 || ^8.0.0",
-                "symfony/messenger": "^6.4.0 || ^7.0.0 || ^8.0.0"
+                "symfony/messenger": "^6.4.0 || ^7.0.0 || ^8.0.0",
+                "symfony/service-contracts": "^2.5 || ^3.0"
             },
             "conflict": {
                 "doctrine/doctrine-bundle": "<2.8",
@@ -664,9 +665,9 @@
             ],
             "support": {
                 "issues": "https://github.com/patchlevel/event-sourcing-bundle/issues",
-                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.16.1"
+                "source": "https://github.com/patchlevel/event-sourcing-bundle/tree/3.17.0"
             },
-            "time": "2026-04-27T06:56:12+00:00"
+            "time": "2026-06-02T07:41:48+00:00"
         },
         {
             "name": "patchlevel/hydrator",
@@ -7066,16 +7067,16 @@
         },
         {
             "name": "sanmai/di-container",
-            "version": "0.1.16",
+            "version": "0.1.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sanmai/di-container.git",
-                "reference": "8b8a8859e992297259b220a92179439f9d185838"
+                "reference": "a901c4a8778c9212ef4d66607525281af2f787bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sanmai/di-container/zipball/8b8a8859e992297259b220a92179439f9d185838",
-                "reference": "8b8a8859e992297259b220a92179439f9d185838",
+                "url": "https://api.github.com/repos/sanmai/di-container/zipball/a901c4a8778c9212ef4d66607525281af2f787bd",
+                "reference": "a901c4a8778c9212ef4d66607525281af2f787bd",
                 "shasum": ""
             },
             "require": {
@@ -7133,7 +7134,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sanmai/di-container/issues",
-                "source": "https://github.com/sanmai/di-container/tree/0.1.16"
+                "source": "https://github.com/sanmai/di-container/tree/0.1.17"
             },
             "funding": [
                 {
@@ -7141,7 +7142,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-30T11:27:18+00:00"
+            "time": "2026-06-01T08:52:14+00:00"
         },
         {
             "name": "sanmai/duoclock",
