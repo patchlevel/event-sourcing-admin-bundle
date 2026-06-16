@@ -1,0 +1,16 @@
+{
+  "navigation": [
+    { "title": "Introduction", "file": "introduction.md" },
+    { "title": "Getting Started", "file": "getting-started.md" },
+    {
+      "title": "Dashboard",
+      "subEntries": [
+        { "title": "Store", "file": "store.md" },
+        { "title": "Inspection", "file": "inspection.md" },
+        { "title": "Events", "file": "events.md" },
+        { "title": "Subscriptions", "file": "subscriptions.md" }
+      ]
+    },
+    { "title": "Production Usage", "file": "production-usage.md" }
+  ]
+}

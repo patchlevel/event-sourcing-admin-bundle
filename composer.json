@@ -2,14 +2,16 @@
   "name": "patchlevel/event-sourcing-admin-bundle",
   "type": "symfony-bundle",
   "license": "MIT",
-  "description": "symfony admin ui for patchlevel/event-sourcing-bundle",
+  "description": "Dashboard to inspect events, time travel through aggregates and manage subscriptions for patchlevel/event-sourcing.",
   "keywords": [
+    "patchlevel",
     "event-sourcing",
     "bundle",
     "symfony",
-    "admin"
+    "admin",
+    "dashboard"
   ],
-  "homepage": "https://github.com/patchlevel/event-sourcing-admin-bundle",
+  "homepage": "https://patchlevel.dev/docs/event-sourcing-admin-bundle/latest",
   "authors": [
     {
       "name": "Daniel Badura",
@@ -40,7 +42,8 @@
     "phpstan/phpstan": "^2.1.32",
     "phpstan/phpstan-symfony": "^2.0.8",
     "phpunit/phpunit": "^11.5.45",
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-master",
+    "wnx/commonmark-markdown-renderer": "^1.6"
   },
   "config": {
     "preferred-install": {
