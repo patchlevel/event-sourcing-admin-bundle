@@ -1,6 +1,9 @@
 [![Latest Stable Version](https://poser.pugx.org/patchlevel/event-sourcing-admin-bundle/v)](https://packagist.org/packages/patchlevel/event-sourcing-admin-bundle)
 [![License](https://poser.pugx.org/patchlevel/event-sourcing-admin-bundle/license)](https://packagist.org/packages/patchlevel/event-sourcing-admin-bundle)
 
+> [!WARNING]
+> This repository was renamed. You should go to https://github.com/patchlevel/event-sourcing-dashboard-bundle
+
 # Event-Sourcing-Admin-Bundle
 
 "A dashboard to inspect your events, time travel through your aggregates and manage your subscriptions."
